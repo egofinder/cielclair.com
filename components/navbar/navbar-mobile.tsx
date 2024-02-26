@@ -94,9 +94,11 @@ const NavbarMobile = ({ isOpen }: NavbarMobileProps) => {
       })}
     >
       <div
-        className={"h-[100vh] w-[75%] bg-white pl-[100px] pt-[150px] text-sm"}
+        className={
+          "flex h-[100vh] w-[75%] flex-row bg-white pl-[30px] pt-[150px] text-sm"
+        }
       >
-        <ul className="flex flex-col gap-2">
+        <ul className="flex h-[450px] flex-1 flex-col gap-2">
           {componentsA.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
@@ -104,6 +106,10 @@ const NavbarMobile = ({ isOpen }: NavbarMobileProps) => {
             <li key={component.title}>{component.title}</li>
           ))}
         </ul>
+        <div className="flex h-[450px] flex-1 flex-row items-end justify-around">
+          <div>로그인</div>
+          <div>검색</div>
+        </div>
       </div>
       <div className="h-[100vh] w-[25%] backdrop-blur-lg" />
     </div>

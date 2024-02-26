@@ -5,26 +5,28 @@ import NavbarDesktop from "./navbar-desktop";
 import useWindowSize from "@/hooks/useWidnowsSize";
 import NavbarMobile from "./navbar-mobile";
 import { cn } from "@/lib/utils";
+
 import Logo from "./logo";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const Navbar = () => {
+  const params = usePathname();
+  const isHomePage = params === "/";
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+  const [mobile, setMobile] = useState(false);
   const { width } = useWindowSize();
-  let mobile = false;
-
-  if (width < 768) {
-    mobile = true;
-  }
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    setMobile(width < 768);
+    if (!mobile) setIsOpen(false);
+  }, [width, mobile]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
 
     // cleanup function
     return () => {
@@ -36,13 +38,13 @@ const Navbar = () => {
     <>
       <div
         className={cn("container sticky inset-0 z-50 bg-transparent p-8", {
-          "bg-white": isOpen,
+          "bg-white/5": isOpen,
         })}
       >
         <nav
           className={cn("w-full text-sm transition duration-500", {
             "text-white": !isOpen,
-            "text-black": isOpen,
+            "text-black": isOpen || !isHomePage,
           })}
         >
           <ul className="flex flex-row justify-between">
@@ -50,7 +52,9 @@ const Navbar = () => {
               <div>메뉴</div>
             </li>
             <li className="min-w-fit flex-1">
+              {/* <Link href="/"> */}
               <Logo />
+              {/* </Link> */}
             </li>
             <li className="flex flex-1 flex-row justify-end gap-8">
               <div className="hidden md:block md:min-w-fit">로그인</div>
