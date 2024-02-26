@@ -52,9 +52,7 @@ const Navbar = () => {
               <div>메뉴</div>
             </li>
             <li className="min-w-fit flex-1">
-              {/* <Link href="/"> */}
               <Logo />
-              {/* </Link> */}
             </li>
             <li className="flex flex-1 flex-row justify-end gap-8">
               <div className="hidden md:block md:min-w-fit">로그인</div>
