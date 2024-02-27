@@ -10,12 +10,6 @@ const Footer = () => {
         <p>
           <b>운영시간 | </b>월 - 금 (11:00 - 17:00)
         </p>
-        <p>
-          <b>점심시간 | </b>12:30 - 14:00
-        </p>
-        <p>
-          <b>(주말 및 공휴일 제외)</b>
-        </p>
       </div>
       <div className="flex-1">
         <p>Owner - BAEKHAK JEON</p>
@@ -36,7 +30,6 @@ const Footer = () => {
       <div className="flex-1">
         <p>TERMS & CONDITIONS</p>
         <p>GUIDE</p>
-
         <p>PRIVACY POLICY </p>
         <p>&#169; All right reserved </p>
       </div>

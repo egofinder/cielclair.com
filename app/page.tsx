@@ -42,17 +42,19 @@ export default function Home() {
       </Carousel>
       {/* Dummy div tag for below paragraph */}
       <div className="container h-[calc(60vh-115px)] w-[100vw] md:h-[calc(100vh-115px)]" />
-      <div className="flex flex-col p-8 md:flex-row">
-        <p className="text-md md:w-[60%] md:text-2xl">
-          AVIE MUAH IS AN ARTISAN CLOTHING BRAND BASED ON THE UNIQUE TASTES OF
-          ITS FOUNDER.THE BRAND USES NATURAL FIBERS TO CREATE COMFORTABLE
-          CLOTHING FOR A WIDE VARIETY OF LIFESTYLES.AVIE MUAH VALUES THE WORK OF
-          INDEPENDENT EMERGING DESIGNERS WHO HELP TO OFFER HIGH QUALITY.HANDMADE
-          GARMENTS FOR EVERY CUSTOMER.
+      <div className="mt-4 flex flex-col gap-4 md:flex-row">
+        <p className="text-md p-2 uppercase md:w-[70%] md:text-2xl">
+          CIEL CLAIR, an artisan clothing brand, drawing inspiration from unique
+          perspectives to craft garments infused with personality. The
+          brand&apos;s commitment to quality and comfort is evident in its
+          utilization of natural fibers, ensuring a relaxed and pleasant wearing
+          experience across diverse lifestyles. Furthermore, its partnership
+          with talented emerging designers underscores CIEL CLAIR&apos;s
+          dedication to supporting independent artists.
         </p>
-        <div className="text-end text-sm font-light underline md:w-[40%] md:text-xl">
+        <p className="text-end text-sm font-light underline md:w-[30%] md:text-xl">
           <Link href="/product">SHOP NOW</Link>
-        </div>
+        </p>
       </div>
     </main>
   );
