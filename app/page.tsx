@@ -32,7 +32,7 @@ export default function Home() {
                   src={image}
                   width={500}
                   height={500}
-                  className="h-full w-full object-cover object-center"
+                  className="h-full w-full object-cover object-top"
                   alt="Models"
                 />
               </div>
