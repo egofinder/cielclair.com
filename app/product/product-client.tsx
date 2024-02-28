@@ -13,14 +13,14 @@ const ProductClient = ({ products }: ProductProps) => {
     router.push(`/product/${index}`);
   };
   return (
-    <div className="grid grid-cols-1 justify-items-center gap-10 md:grid-cols-3">
+    <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (
         <div
           className="w-full min-w-[250px] max-w-[500px] p-4"
           key={product.id}
           onClick={() => handleClick(product.id)}
         >
-          <div className="relative mb-4 h-[500px]">
+          <div className="relative mb-4 aspect-[3/4]">
             <Image
               src={product.images[0]}
               alt={product.name}
