@@ -1,23 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: 0,
   });
 
+  const handleResize = useCallback(() => {
+    setWindowSize({
+      width: window.innerWidth || 0,
+    });
+  }, []);
+
   useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth || 0,
-      });
-    }
-
     window.addEventListener("resize", handleResize);
-
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [handleResize]);
 
   return windowSize;
 }

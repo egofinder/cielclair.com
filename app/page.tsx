@@ -52,7 +52,7 @@ export default function Home() {
           with talented emerging designers underscores CIEL CLAIR&apos;s
           dedication to supporting independent artists.
         </p>
-        <p className="text-end text-sm font-light underline md:w-[30%] md:text-xl">
+        <p className="p-2 text-end text-sm font-light underline md:w-[30%] md:text-xl">
           <Link href="/product">SHOP NOW</Link>
         </p>
       </div>
