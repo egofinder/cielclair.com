@@ -18,7 +18,6 @@ const ProductClient = ({ products }: ProductProps) => {
         <div
           className="w-full min-w-[250px] max-w-[500px] p-4"
           key={product.id}
-          onClick={() => handleClick(product.id)}
         >
           <div className="relative mb-4 aspect-[3/4]">
             <Image
@@ -36,7 +35,10 @@ const ProductClient = ({ products }: ProductProps) => {
               className="absolute inset-0 h-full object-cover object-center opacity-0 transition-opacity duration-200 hover:opacity-100"
             />
           </div>
-          <div className="flex flex-col gap-3 text-sm">
+          <div
+            className="flex cursor-pointer flex-col gap-3 text-sm"
+            onClick={() => handleClick(product.id)}
+          >
             <p className="">{product.name}</p>
             <p className="">
               {new Intl.NumberFormat("en-US", {
