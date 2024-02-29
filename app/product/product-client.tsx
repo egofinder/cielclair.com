@@ -1,4 +1,5 @@
 "use client";
+import { formatPrice } from "@/lib/utils";
 import { Product } from "@/type/product";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -40,13 +41,8 @@ const ProductClient = ({ products }: ProductProps) => {
             onClick={() => handleClick(product.id)}
           >
             <p className="">{product.name}</p>
-            <p className="">
-              {new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-              }).format(product.price)}
-            </p>
-            <p className="font-semibold">{product.description}</p>
+            <p className="">USD {formatPrice(product.price)}</p>
+            <p className="font-semibold">{product.etc}</p>
           </div>
         </div>
       ))}

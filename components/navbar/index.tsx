@@ -48,13 +48,13 @@ const Navbar = () => {
           })}
         >
           <ul className="flex flex-row justify-between">
-            <li className="flex-1 cursor-pointer" onClick={toggle}>
+            <li className="w-[20%] flex-auto cursor-pointer" onClick={toggle}>
               <div>메뉴</div>
             </li>
-            <li className="min-w-fit flex-1">
+            <li className="w-[60%] flex-auto">
               <Logo />
             </li>
-            <li className="flex flex-1 flex-row justify-end gap-8">
+            <li className="flex w-[20%] flex-auto flex-row justify-end gap-5">
               <div className="hidden md:block md:min-w-fit">로그인</div>
               <div className="hidden md:block md:min-w-fit">검색</div>
               <div>장바구니</div>
