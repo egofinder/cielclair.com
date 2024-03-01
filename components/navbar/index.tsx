@@ -40,7 +40,7 @@ const Navbar = () => {
     <>
       <div
         className={cn(
-          "container sticky inset-0 z-50 h-[115px] bg-transparent p-4 bg-blend-normal",
+          "container sticky inset-0 z-50 h-[90px] px-5 pt-5 bg-blend-normal",
           {
             "bg-white/5": isOpen,
             "bg-white/20": mobile,
@@ -54,15 +54,15 @@ const Navbar = () => {
           })}
         >
           <ul className="flex flex-row justify-between">
-            <li className="w-[20%] flex-auto cursor-pointer" onClick={toggle}>
+            <li className="w-[25%] flex-auto cursor-pointer" onClick={toggle}>
               <div>메뉴</div>
             </li>
             <li className="w-[60%] flex-auto">
               <Logo />
             </li>
-            <li className="flex w-[20%] flex-auto flex-row justify-end gap-5">
-              <div className="hidden md:block md:min-w-fit">로그인</div>
-              <div className="hidden md:block md:min-w-fit">검색</div>
+            <li className="flex w-[25%] flex-auto flex-row justify-end gap-5">
+              <div className="hidden md:block">로그인</div>
+              <div className="hidden md:block">검색</div>
               <div>장바구니</div>
             </li>
           </ul>

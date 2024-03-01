@@ -27,12 +27,12 @@ export default function Home() {
         <CarouselContent>
           {imageList.map((image, index) => (
             <CarouselItem key={index}>
-              <div className="h-[60vh] bg-slate-600 md:h-[100vh]">
+              <div className="h-[60vh] w-[100vw] md:h-[100vh]">
                 <Image
                   src={image}
-                  width={500}
-                  height={500}
-                  className="h-full w-full object-cover object-top"
+                  width={1000}
+                  height={1000}
+                  className="h-full w-full object-cover"
                   alt="Models"
                 />
               </div>
@@ -40,9 +40,7 @@ export default function Home() {
           ))}
         </CarouselContent>
       </Carousel>
-      {/* Dummy div tag for below paragraph */}
-      <div className="container h-[calc(60vh-115px)] w-[100vw] md:h-[calc(100vh-115px)]" />
-      <div className="mt-4 flex flex-col gap-4 md:flex-row">
+      <div className="mt-[calc(60vh-90px)] flex flex-col gap-4 md:mt-[calc(100vh-90px)] md:flex-row">
         <p className="text-md p-2 uppercase md:w-[70%] md:text-2xl">
           CIEL CLAIR, an artisan clothing brand, drawing inspiration from unique
           perspectives to craft garments infused with personality. The
@@ -52,7 +50,7 @@ export default function Home() {
           with talented emerging designers underscores CIEL CLAIR&apos;s
           dedication to supporting independent artists.
         </p>
-        <p className="p-2 text-end text-sm font-light underline md:w-[30%] md:text-xl">
+        <p className="p-4 text-end text-sm font-light underline md:w-[30%] md:text-xl">
           <Link href="/product">SHOP NOW</Link>
         </p>
       </div>

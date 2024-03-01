@@ -30,68 +30,98 @@ const ProductIdClient = ({
 }: ProductClientProps) => {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
-  const { id, name, price, description, etc, images } = product;
+  const { id, name, sizes, price, description, etc, images } = product;
   return (
-    <div className="gap-8">
-      <div
-        className="hidden overflow-y-auto md:absolute md:-top-[115px] md:left-0 md:block md:h-[calc(100%+115px)] md:w-[70%]"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {images.map((image, index) => (
-          <Image
-            key={index}
-            className="w-full bg-muted object-contain object-center"
-            src={image}
-            alt={name}
-            width={500}
-            height={500}
-          />
-        ))}
-      </div>
-      <div className="absolute -top-[115px] left-0 flex h-[100vh] w-full bg-muted md:hidden">
-        <Carousel plugins={[plugin.current]}>
-          <CarouselContent>
-            {images.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="">
-                  <Image
-                    src={image}
-                    width={500}
-                    height={500}
-                    className="h-[100vh] w-full object-contain object-center"
-                    alt="Models"
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
-
-      <div className="pt-[calc(100vh-100px)] md:ml-[70%] md:mt-0 md:w-[30%] md:p-4">
-        <div className="flex flex-col gap-4 text-sm">
-          <div>{name}</div>
-          <div>USD {formatPrice(price)}</div>
-          <div>
-            <SizeSelect />
-          </div>
-          <div>
-            <PlusMinusButton />
-          </div>
-          <div>
-            <CollapseBox title="상품 설명" data={description} />
-            <CollapseBox title="배송 정보" data={shippingInfo} />
-            <CollapseBox title="반품 정책" data={returnPolicy} />
-          </div>
-          <div className="mt-10 flex flex-col gap-4 p-4">
-            <Button className="rounded-none" variant="secondary">
-              장바구니
-            </Button>
-            <Button className="rounded-none">바로 구매</Button>
+    <>
+      {/* TODO: 공통된 요소 하나로 합쳐서 개발해야 함. */}
+      {/* Desktop View */}
+      <div className="hidden md:block">
+        <div
+          className="absolute -top-[90px] h-[calc(100vh+90px)] w-[60%] overflow-y-auto"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {images.map((image, index) => (
+            <Image
+              key={index}
+              className="h-full w-full object-cover object-center"
+              src={image}
+              alt={name}
+              width={500}
+              height={500}
+            />
+          ))}
+        </div>
+        <div className="ml-[60%] h-[100vh] w-[40%] p-10">
+          <div className="flex flex-col gap-4 text-sm">
+            <div>{name}</div>
+            <div>USD {formatPrice(price)}</div>
+            <div>
+              <SizeSelect sizes={sizes} />
+            </div>
+            <div>
+              <PlusMinusButton />
+            </div>
+            <div className="flex flex-col gap-2">
+              <CollapseBox title="상품 설명" data={description} />
+              <CollapseBox title="배송 정보" data={shippingInfo} />
+              <CollapseBox title="반품 정책" data={returnPolicy} />
+            </div>
+            <div className="mt-10 flex flex-col gap-4">
+              <Button className="rounded-none" variant="secondary">
+                장바구니
+              </Button>
+              <Button className="rounded-none">바로 구매</Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Mobile View */}
+      <div className="block overflow-auto md:hidden">
+        <div className="absolute -top-[90px] h-[100vh] w-full">
+          <Carousel plugins={[plugin.current]}>
+            <CarouselContent>
+              {images.map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="">
+                    <Image
+                      src={image}
+                      width={500}
+                      height={500}
+                      className="h-[100vh] w-full object-cover object-center"
+                      alt="Models"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+        <div className="mt-[calc(100vh-90px)] w-full p-4">
+          <div className="flex flex-col gap-4 text-sm">
+            <div>{name}</div>
+            <div>USD {formatPrice(price)}</div>
+            <div>
+              <SizeSelect sizes={sizes} />
+            </div>
+            <div>
+              <PlusMinusButton />
+            </div>
+            <div className="flex flex-col gap-2">
+              <CollapseBox title="상품 설명" data={description} />
+              <CollapseBox title="배송 정보" data={shippingInfo} />
+              <CollapseBox title="반품 정책" data={returnPolicy} />
+            </div>
+            <div className="mt-10 flex flex-col gap-4">
+              <Button className="rounded-none" variant="secondary">
+                장바구니
+              </Button>
+              <Button className="rounded-none">바로 구매</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

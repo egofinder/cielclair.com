@@ -88,30 +88,33 @@ interface NavbarMobileProps {
 const NavbarMobile = ({ isOpen }: NavbarMobileProps) => {
   return (
     <div
-      className={cn("sticky inset-0 z-40 flex transition duration-500", {
-        "hidden opacity-0": !isOpen,
-        "opacity-100": isOpen,
-      })}
+      className={cn(
+        "sticky inset-0 z-40 flex h-[100vh] flex-auto transition duration-500",
+        {
+          "hidden opacity-0": !isOpen,
+          "opacity-100": isOpen,
+        },
+      )}
     >
       <div
         className={
-          "flex h-[100vh] w-[75%] flex-row bg-white pl-[30px] pt-[150px] text-sm"
+          "flex w-[75%] flex-row bg-white pl-[30px] pt-[115px] text-sm"
         }
       >
-        <ul className="flex h-[450px] flex-1 flex-col gap-2">
+        <ul className="flex flex-1 flex-col gap-2">
           {componentsA.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
           {componentsB.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
+          <div className="m-8 flex justify-end gap-8">
+            <div>로그인</div>
+            <div>검색</div>
+          </div>
         </ul>
-        <div className="flex h-[450px] flex-1 flex-row items-end justify-around">
-          <div>로그인</div>
-          <div>검색</div>
-        </div>
       </div>
-      <div className="h-[100vh] w-[25%] backdrop-blur-lg" />
+      <div className="w-[25%] backdrop-blur-lg" />
     </div>
   );
 };

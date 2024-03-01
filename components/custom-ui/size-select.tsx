@@ -7,8 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Product } from "@/type/product";
 
-const SizeSelect = () => {
+interface SizeSelectProps {
+  sizes: Product["sizes"];
+}
+
+const SizeSelect = ({ sizes }: SizeSelectProps) => {
   return (
     <Select>
       <SelectTrigger className="w-full rounded-none border-black">
@@ -16,8 +21,11 @@ const SizeSelect = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="size_1">사이즈 1</SelectItem>
-          <SelectItem value="size_2">사이즈 2</SelectItem>
+          {sizes.map((size, index) => (
+            <SelectItem key={index} value={size}>
+              {size}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

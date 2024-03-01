@@ -88,42 +88,42 @@ interface NavbarDesktopProps {
 const NavbarDesktop = ({ isOpen }: NavbarDesktopProps) => {
   return (
     <div
-      className={cn("sticky inset-0 z-40 transition duration-500", {
+      className={cn("container sticky inset-0 z-40 transition duration-500", {
         "hidden opacity-0": !isOpen,
         "opacity-100": isOpen,
       })}
     >
       <div
         className={
-          "container grid h-[650px] grid-cols-3 bg-white p-[150px] text-sm"
+          "item flex h-[650px] justify-center bg-white px-[10vw] py-[115px] text-sm"
         }
       >
-        <ul className="flex min-h-0 flex-col gap-2">
+        <ul className="flex w-[25%] flex-col gap-2">
           {componentsA.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
         </ul>
-        <ul className="flex min-h-0 flex-col gap-2">
+        <ul className="flex w-[25%] flex-col gap-2">
           {componentsB.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
         </ul>
-        <div className="flex min-h-0 flex-col gap-2">
-          <div className="relative h-full w-[225px]">
+        <div className="relative flex h-full w-[50%] flex-col gap-2">
+          <div className="bg-sky-40 h-[90%]">
             <Image
-              src="https://images.unsplash.com/photo-1562572159-4efc207f5aff?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="/product/model-1.png"
               alt="Image"
-              className="absolute top-0 h-full w-full object-cover"
+              className="h-full object-cover"
               width={500}
               height={500}
             />
           </div>
-          <div className="">잡화</div>
-          <div className="">바로가기</div>
+          <div className="h-[5%]">여성</div>
+          <div className="h-[5%]">바로가기</div>
         </div>
       </div>
 
-      <div className="h-[calc(100vh-650px)] bg-white/30 backdrop-blur-xl"></div>
+      <div className="h-[calc(100vh-650px)]  bg-white/30 backdrop-blur-xl" />
     </div>
   );
 };

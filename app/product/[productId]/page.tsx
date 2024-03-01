@@ -20,7 +20,7 @@ const ProductDetailPage = ({ params }: { params: IParams }) => {
   }
 
   return (
-    <div className="container relative px-4">
+    <div className="container relative">
       <ProductIdClient
         product={product}
         shippingInfo={shippingInfo}
