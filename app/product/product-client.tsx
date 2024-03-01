@@ -17,8 +17,9 @@ const ProductClient = ({ products }: ProductProps) => {
     <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (
         <div
-          className="w-full min-w-[250px] max-w-[500px] p-4"
+          className="w-full min-w-[250px] max-w-[500px] cursor-pointer p-4"
           key={product.id}
+          onClick={() => handleClick(product.id)}
         >
           <div className="relative mb-4 aspect-[3/4]">
             <Image
@@ -36,10 +37,7 @@ const ProductClient = ({ products }: ProductProps) => {
               className="absolute inset-0 h-full object-cover object-center opacity-0 transition-opacity duration-200 hover:opacity-100"
             />
           </div>
-          <div
-            className="flex cursor-pointer flex-col gap-3 text-sm"
-            onClick={() => handleClick(product.id)}
-          >
+          <div className="flex flex-col gap-3 text-sm">
             <p className="">{product.name}</p>
             <p className="">USD {formatPrice(product.price)}</p>
             <p className="font-semibold">{product.etc}</p>

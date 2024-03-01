@@ -27,22 +27,27 @@ const Navbar = () => {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
+    document.body.style.overflowX = "hidden"; // Add this line
 
     // cleanup function
     return () => {
       document.body.style.overflow = "auto";
+      document.body.style.overflowX = "auto"; // Add this line
     };
   }, [isOpen]);
 
   return (
     <>
       <div
-        className={cn("container sticky inset-0 z-50 bg-transparent p-8", {
-          "bg-white/5": isOpen,
-        })}
+        className={cn(
+          "container sticky inset-0 z-50 h-[115px] bg-transparent p-4",
+          {
+            "bg-white/5": isOpen,
+          },
+        )}
       >
         <nav
-          className={cn("w-full text-sm transition duration-500", {
+          className={cn("text-sm transition duration-500", {
             "text-white": !isOpen,
             "text-black": isOpen || !isHomePage,
           })}
@@ -62,8 +67,8 @@ const Navbar = () => {
           </ul>
         </nav>
       </div>
-      <NavbarDesktop isOpen={isOpen && !mobile} />
-      <NavbarMobile isOpen={isOpen && mobile} />
+      {/* <NavbarDesktop isOpen={isOpen && !mobile} /> */}
+      {/* <NavbarMobile isOpen={isOpen && mobile} /> */}
     </>
   );
 };

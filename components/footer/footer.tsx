@@ -3,7 +3,7 @@ import { RiKakaoTalkLine } from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <div className="container mt-5 flex flex-col items-start justify-between gap-4 p-4 text-sm md:mt-10 md:flex-row md:gap-16 md:p-10">
+    <div className="container flex flex-col items-start justify-between gap-4 p-4 text-sm  md:flex-row md:gap-16 md:p-10">
       <div className="flex-1">
         <p>Ciel Clair</p>
         <p>info@cielclair.com</p>

@@ -5,4 +5,5 @@ export type Product = {
   description: string[];
   etc?: string;
   images: string[];
+  thumbnail: string[];
 };

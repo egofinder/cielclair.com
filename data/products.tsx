@@ -20,7 +20,14 @@ export const products = [
     ],
     etc: "HOT ITEM",
     price: 2890,
-    images: ["/product/model-1.png", "/product/sample-2.jpeg"],
+    thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
+    images: [
+      "/product/model-1.png",
+      "/product/model-2.png",
+      "/product/model-3.png",
+      "/product/model-4.png",
+      "/product/model-5.png",
+    ],
   },
   {
     id: "22222-23223-2232",
@@ -42,10 +49,17 @@ export const products = [
       "제조국: South Korea",
     ],
     price: 1680,
-    images: ["/product/model-2.png", "/product/sample-2.jpeg"],
+    thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
+    images: [
+      "/product/model-1.png",
+      "/product/model-2.png",
+      "/product/model-3.png",
+      "/product/model-4.png",
+      "/product/model-5.png",
+    ],
   },
   {
-    id: "3982392-290222-231",
+    id: "398-290222-231",
     name: "실크 플로럴 프린트 블루 블라우스",
     description: [
       "Outshell: Korean Fabric · Wool 100%",
@@ -64,10 +78,17 @@ export const products = [
       "제조국: South Korea",
     ],
     price: 1290,
-    images: ["/product/model-3.png", "/product/sample-2.jpeg"],
+    thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
+    images: [
+      "/product/model-1.png",
+      "/product/model-2.png",
+      "/product/model-3.png",
+      "/product/model-4.png",
+      "/product/model-5.png",
+    ],
   },
   {
-    id: "3982392-290222-231",
+    id: "392-290222-231",
     name: "실크 심플 그레이 블라우스",
     description: [
       "Outshell: Korean Fabric · Wool 100%",
@@ -86,6 +107,13 @@ export const products = [
       "제조국: South Korea",
     ],
     price: 1290,
-    images: ["/product/model-4.png", "/product/sample-2.jpeg"],
+    thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
+    images: [
+      "/product/model-1.png",
+      "/product/model-2.png",
+      "/product/model-3.png",
+      "/product/model-4.png",
+      "/product/model-5.png",
+    ],
   },
 ];
