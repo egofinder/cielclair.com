@@ -40,9 +40,10 @@ const Navbar = () => {
     <>
       <div
         className={cn(
-          "container sticky inset-0 z-50 h-[115px] bg-transparent p-4",
+          "container sticky inset-0 z-50 h-[115px] bg-transparent p-4 bg-blend-normal",
           {
             "bg-white/5": isOpen,
+            "bg-white/20": mobile,
           },
         )}
       >
@@ -67,8 +68,8 @@ const Navbar = () => {
           </ul>
         </nav>
       </div>
-      {/* <NavbarDesktop isOpen={isOpen && !mobile} /> */}
-      {/* <NavbarMobile isOpen={isOpen && mobile} /> */}
+      <NavbarDesktop isOpen={isOpen && !mobile} />
+      <NavbarMobile isOpen={isOpen && mobile} />
     </>
   );
 };
