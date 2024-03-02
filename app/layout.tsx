@@ -3,6 +3,7 @@ import { Roboto_Condensed } from "next/font/google";
 import "@/styles/globals.css";
 import Footer from "@/components/footer/footer";
 import Navbar from "@/components/navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 const robotoCondensed = Roboto_Condensed({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

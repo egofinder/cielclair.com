@@ -1,21 +1,20 @@
 "use client";
 
+import Image from "next/image";
+import { useRef } from "react";
 import { formatPrice } from "@/lib/utils";
 import { Product } from "@/type/product";
 import CollapseBox from "@/components/product/collapse-box";
-
 import { Button } from "@/components/ui/button";
-
-import Image from "next/image";
 import PlusMinusButton from "@/components/custom-ui/plus-minus-button";
 import SizeSelect from "@/components/custom-ui/size-select";
+import CartButton from "@/components/custom-ui/basket-button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
 
 interface ProductClientProps {
   product: Product;
@@ -67,9 +66,7 @@ const ProductIdClient = ({
               <CollapseBox title="반품 정책" data={returnPolicy} />
             </div>
             <div className="mt-10 flex flex-col gap-4">
-              <Button className="rounded-none" variant="secondary">
-                장바구니
-              </Button>
+              <CartButton productId={id} />
               <Button className="rounded-none">바로 구매</Button>
             </div>
           </div>
@@ -113,9 +110,7 @@ const ProductIdClient = ({
               <CollapseBox title="반품 정책" data={returnPolicy} />
             </div>
             <div className="mt-10 flex flex-col gap-4">
-              <Button className="rounded-none" variant="secondary">
-                장바구니
-              </Button>
+              <CartButton productId={id} />
               <Button className="rounded-none">바로 구매</Button>
             </div>
           </div>

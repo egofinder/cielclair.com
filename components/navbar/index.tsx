@@ -63,7 +63,9 @@ const Navbar = () => {
             <li className="flex w-[25%] flex-auto flex-row justify-end gap-5">
               <div className="hidden md:block">로그인</div>
               <div className="hidden md:block">검색</div>
-              <div>장바구니</div>
+              <div>
+                <Link href="/order/basket">장바구니</Link>
+              </div>
             </li>
           </ul>
         </nav>

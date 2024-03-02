@@ -6,7 +6,7 @@ const ProductPage = async () => {
   const products: Product[] = await new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
-    }, 1000);
+    }, 500);
   });
 
   return (
