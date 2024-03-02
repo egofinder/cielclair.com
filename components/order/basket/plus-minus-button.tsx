@@ -15,15 +15,11 @@ export default function PlusMinusButton() {
     setCount(count - 1);
   }
   return (
-    <div
-      className={cn(
-        "flex-cols flex h-[40px] w-fit  border border-black font-light",
-      )}
-    >
+    <div className={cn("flex-cols flex h-[20px] w-fit font-light")}>
       <div className="flex h-full w-full items-center justify-start">
         <PiMinusThin onClick={decrementCount} />
       </div>
-      <div className="flex h-full w-[50px] items-center justify-center">
+      <div className="flex h-full w-[20px] items-center justify-center">
         {count}
       </div>
       <div className="flex h-full w-full items-center justify-end">
