@@ -15,6 +15,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import OrderButton from "@/components/custom-ui/order-button";
 
 interface ProductClientProps {
   product: Product;
@@ -67,7 +68,7 @@ const ProductIdClient = ({
             </div>
             <div className="mt-10 flex flex-col gap-4">
               <CartButton productId={id} />
-              <Button className="rounded-none">바로 구매</Button>
+              <OrderButton />
             </div>
           </div>
         </div>
