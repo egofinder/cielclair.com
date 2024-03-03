@@ -75,10 +75,7 @@ const ProductIdClient = ({
         </div>
       </div>
 
-      <div
-        className="mt-[calc(100vh-90px)] w-full p-4
-      md:ml-[60%] md:mt-0 md:h-[100vh] md:w-[40%] md:p-10"
-      >
+      <div className="mt-[calc(100vh-90px)] w-full p-4 md:ml-[60%] md:mt-0 md:h-[100vh] md:w-[40%] md:p-10">
         <div className="flex flex-col gap-4 text-sm">
           <div>{name}</div>
           <div>USD {formatPrice(price)}</div>

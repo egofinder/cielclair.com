@@ -14,13 +14,13 @@ const CollapseBox = ({ title, data }: CollapseBoxProps) => {
   return (
     <Accordion type="multiple">
       <AccordionItem value="item-1" className="border-none">
-        <AccordionTrigger className="justify-start py-0 font-normal">
+        <AccordionTrigger className="justify-start py-2 font-normal">
           {title}
         </AccordionTrigger>
         <AccordionContent>
-          <ul className="pl-8">
+          <ul className="pl-4">
             {data.map((item, index) => (
-              <li key={index} className="list-inside list-disc">
+              <li key={index} className="m-2 list-inside list-[upper-roman]">
                 {item}
               </li>
             ))}

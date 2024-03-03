@@ -21,29 +21,29 @@ const ProductClient = ({ products }: ProductProps) => {
         const { id, thumbnail, name, etc, price, status } = product;
         return (
           <div
-            className="aspect-[3/4] w-full min-w-[250px] max-w-[500px] cursor-pointer p-4"
+            className="w-full cursor-pointer p-4"
             key={id}
             onClick={() => handleClick(id)}
           >
-            <div className="relative aspect-[3/4] bg-white">
+            <div
+              className="relative aspect-[3/4]"
+              style={{
+                backgroundImage: `url(${thumbnail[1]})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
               <Image
                 src={thumbnail[0]}
                 alt={name}
                 fill
-                className="object-contain transition-opacity duration-200 hover:opacity-0"
+                className="object-cover transition-opacity duration-200 hover:opacity-0"
               />
-              <Image
-                src={thumbnail[1]}
-                alt={name}
-                fill
-                className="bg-white object-contain opacity-0 transition-opacity duration-200 hover:opacity-100"
-              />
-
               {status !== ProductStatus.InStock ? (
                 <StatusBadge status={status} position="inset-2" />
               ) : null}
             </div>
-            <div className="flex flex-col gap-3 p-4 text-sm">
+            <div className="mt-4 flex flex-col gap-3 text-sm">
               <p className="">{name}</p>
               <p className="">USD {formatPrice(price)}</p>
               <p className="font-semibold">{etc}</p>

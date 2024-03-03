@@ -22,7 +22,7 @@ const BasketPage = () => {
     (total, product) => (product ? total + product.price : total),
     0,
   );
-  const shippingFee = 65; // 배송비를 적절한 값으로 설정하세요.
+  const shippingFee = 65;
   const totalPayment = totalAmount + shippingFee;
 
   return (

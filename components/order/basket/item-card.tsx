@@ -2,7 +2,7 @@ import Image from "next/image";
 import PlusMinusButton from "@/components/order/basket/plus-minus-button";
 import useCart from "@/hooks/useCart";
 import { formatPrice } from "@/lib/utils";
-import { MdOutlineCancel } from "react-icons/md";
+import { RxCross1 } from "react-icons/rx";
 import { Separator } from "@/components/ui/separator";
 import { Product } from "@/type/product";
 
@@ -17,25 +17,25 @@ const ItemCard = ({ product }: ItemCardProps) => {
   return (
     <>
       <div className="flex h-fit w-full flex-row justify-between text-sm">
-        <div className="relative h-[100px] w-[150px]">
+        <div className="relative aspect-[3/4] h-[100px]">
           <Image
-            className="object-contain object-center"
+            className="object-cover object-center"
             fill
             src={images[0]}
             alt={name}
           />
         </div>
         <div className="flex w-full flex-col items-start gap-1 pl-4">
-          <div className="font-bold">{name}</div>
+          <div className="font-semibold">{name}</div>
           <div className="">{etc}</div>
-          <div className="font-extrabold">{formatPrice(price)}</div>
+          <div className="font-bold">{formatPrice(price)}</div>
           <div>
             <PlusMinusButton />
           </div>
         </div>
         <div className="flex w-fit flex-col items-end">
-          <MdOutlineCancel
-            size={20}
+          <RxCross1
+            size={15}
             className="cursor-pointer"
             onClick={() => removeFromCart(id)}
           />
