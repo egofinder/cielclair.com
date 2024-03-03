@@ -1,3 +1,5 @@
+import { ProductStatus } from "@/type/enums";
+
 export const products = [
   {
     id: "1232-2223-1111",
@@ -29,6 +31,7 @@ export const products = [
       "/product/model-4.png",
       "/product/model-5.png",
     ],
+    status: ProductStatus.InStock,
   },
   {
     id: "22222-23223-2232",
@@ -59,6 +62,7 @@ export const products = [
       "/product/model-4.png",
       "/product/model-5.png",
     ],
+    status: ProductStatus.InStock,
   },
   {
     id: "398-290222-231",
@@ -89,6 +93,7 @@ export const products = [
       "/product/model-4.png",
       "/product/model-5.png",
     ],
+    status: ProductStatus.LowStock,
   },
   {
     id: "392-290222-231",
@@ -119,5 +124,6 @@ export const products = [
       "/product/model-4.png",
       "/product/model-5.png",
     ],
+    status: ProductStatus.SoldOut,
   },
 ];

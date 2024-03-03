@@ -27,21 +27,15 @@ export default function Home() {
         <CarouselContent>
           {imageList.map((image, index) => (
             <CarouselItem key={index}>
-              <div className="h-[60vh] w-[100vw] md:h-[100vh]">
-                <Image
-                  src={image}
-                  width={1000}
-                  height={1000}
-                  className="h-full w-full object-cover"
-                  alt="Models"
-                />
+              <div className="relative h-[60vh] w-full md:h-[100vh]">
+                <Image src={image} fill className="object-cover" alt="Models" />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="mt-[calc(60vh-90px)] flex flex-col gap-4 md:mt-[calc(100vh-90px)] md:flex-row">
-        <p className="text-md p-2 uppercase md:w-[70%] md:text-2xl">
+      <div className="mt-[calc(60vh-90px)] flex flex-col md:mt-[calc(100vh-90px)] md:flex-row">
+        <p className="text-md p-4 uppercase md:w-[70%] md:text-2xl">
           CIEL CLAIR, an artisan clothing brand, drawing inspiration from unique
           perspectives to craft garments infused with personality. The
           brand&apos;s commitment to quality and comfort is evident in its

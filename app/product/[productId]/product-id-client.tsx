@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import OrderButton from "@/components/custom-ui/order-button";
+import { ProductStatus } from "@/type/enums";
 
 interface ProductClientProps {
   product: Product;
@@ -30,52 +31,29 @@ const ProductIdClient = ({
 }: ProductClientProps) => {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
-  const { id, name, sizes, price, description, etc, images } = product;
+  const { id, name, sizes, price, description, status, images } = product;
   return (
-    <>
-      {/* TODO: 공통된 요소 하나로 합쳐서 개발해야 함. */}
+    <div>
       {/* Desktop View */}
-      <div className="hidden md:block">
+      <div className="hidden md:block md:overflow-auto">
         <div
-          className="absolute -top-[90px] h-[calc(100vh+90px)] w-[60%] overflow-y-auto"
+          className="absolute -top-[90px] h-[100vh] w-[60%] overflow-y-auto"
           style={{ scrollbarWidth: "none" }}
         >
           {images.map((image, index) => (
             <Image
               key={index}
-              className="h-full w-full object-cover object-center"
+              className="object-cover object-center"
               src={image}
               alt={name}
-              width={500}
-              height={500}
+              width={1000}
+              height={1000}
             />
           ))}
         </div>
-        <div className="ml-[60%] h-[100vh] w-[40%] p-10">
-          <div className="flex flex-col gap-4 text-sm">
-            <div>{name}</div>
-            <div>USD {formatPrice(price)}</div>
-            <div>
-              <SizeSelect sizes={sizes} />
-            </div>
-            <div>
-              <PlusMinusButton />
-            </div>
-            <div className="flex flex-col gap-2">
-              <CollapseBox title="상품 설명" data={description} />
-              <CollapseBox title="배송 정보" data={shippingInfo} />
-              <CollapseBox title="반품 정책" data={returnPolicy} />
-            </div>
-            <div className="mt-10 flex flex-col gap-4">
-              <CartButton productId={id} />
-              <OrderButton />
-            </div>
-          </div>
-        </div>
       </div>
-
-      {/* Mobile View */}
       <div className="block overflow-auto md:hidden">
+        {/* Mobile View */}
         <div className="absolute -top-[90px] h-[100vh] w-full">
           <Carousel plugins={[plugin.current]}>
             <CarouselContent>
@@ -95,29 +73,41 @@ const ProductIdClient = ({
             </CarouselContent>
           </Carousel>
         </div>
-        <div className="mt-[calc(100vh-90px)] w-full p-4">
-          <div className="flex flex-col gap-4 text-sm">
-            <div>{name}</div>
-            <div>USD {formatPrice(price)}</div>
-            <div>
-              <SizeSelect sizes={sizes} />
-            </div>
-            <div>
-              <PlusMinusButton />
-            </div>
-            <div className="flex flex-col gap-2">
-              <CollapseBox title="상품 설명" data={description} />
-              <CollapseBox title="배송 정보" data={shippingInfo} />
-              <CollapseBox title="반품 정책" data={returnPolicy} />
-            </div>
-            <div className="mt-10 flex flex-col gap-4">
-              <CartButton productId={id} />
-              <Button className="rounded-none">바로 구매</Button>
-            </div>
+      </div>
+
+      <div
+        className="mt-[calc(100vh-90px)] w-full p-4
+      md:ml-[60%] md:mt-0 md:h-[100vh] md:w-[40%] md:p-10"
+      >
+        <div className="flex flex-col gap-4 text-sm">
+          <div>{name}</div>
+          <div>USD {formatPrice(price)}</div>
+          <div>
+            <SizeSelect sizes={sizes} />
+          </div>
+          <div>
+            <PlusMinusButton />
+          </div>
+          <div className="flex flex-col gap-2">
+            <CollapseBox title="상품 설명" data={description} />
+            <CollapseBox title="배송 정보" data={shippingInfo} />
+            <CollapseBox title="반품 정책" data={returnPolicy} />
+          </div>
+          <div className="mt-10 flex flex-col gap-4">
+            {status === ProductStatus.SoldOut ? (
+              <Button className="h-10 rounded-none" variant="secondary">
+                Sold Out
+              </Button>
+            ) : (
+              <>
+                <CartButton productId={id} />
+                <OrderButton />
+              </>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

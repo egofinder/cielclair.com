@@ -13,7 +13,7 @@ const CartButton = ({ productId }: CartButtonProps) => {
 
   return (
     <Button
-      className="rounded-none"
+      className="h-10 rounded-none"
       variant="secondary"
       onClick={() => saveToCart(productId)}
     >

@@ -15,7 +15,7 @@ const OrderButton = ({ cartId, className }: OrderButtonProps) => {
 
   return (
     <Button
-      className={cn("rounded-none", className)}
+      className={cn("h-10 rounded-none", className)}
       //   onClick={() => saveToCart(productId)}
     >
       주문하기

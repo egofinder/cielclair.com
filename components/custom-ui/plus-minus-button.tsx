@@ -16,16 +16,12 @@ export default function PlusMinusButton() {
     setCount(count - 1);
   }
   return (
-    <div
-      className={cn(
-        "flex-cols flex h-[40px] w-fit  border border-black font-light",
-      )}
-    >
-      <div className="flex h-full w-full items-center justify-start">
+    <div className={"flex-cols flex h-10 w-fit border border-black font-light"}>
+      <div className="flex w-full items-center justify-start">
         <Button
-          className="rounded-none border-none"
+          className="h-full rounded-none border-none"
           variant="outline"
-          size="icon"
+          // size="icon"
           onClick={decrementCount}
         >
           <PiMinusThin />
@@ -36,9 +32,9 @@ export default function PlusMinusButton() {
       </div>
       <div className="flex h-full w-full items-center justify-end">
         <Button
-          className="rounded-none border-none"
+          className="h-full rounded-none border-none"
           variant="outline"
-          size="icon"
+          // size="icon"
           onClick={incrementCount}
         >
           <PiPlusThin />

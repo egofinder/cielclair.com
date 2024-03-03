@@ -16,7 +16,7 @@ interface SizeSelectProps {
 const SizeSelect = ({ sizes }: SizeSelectProps) => {
   return (
     <Select>
-      <SelectTrigger className="w-full rounded-none border-black">
+      <SelectTrigger className="h-10 w-full rounded-none border-black">
         <SelectValue placeholder="사이즈를 선택해 주세요." />
       </SelectTrigger>
       <SelectContent>

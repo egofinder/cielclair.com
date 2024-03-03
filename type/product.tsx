@@ -1,3 +1,5 @@
+import { ProductStatus } from "./enums";
+
 export type Product = {
   id: string;
   name: string;
@@ -7,4 +9,5 @@ export type Product = {
   etc?: string;
   images: string[];
   thumbnail: string[];
+  status: ProductStatus;
 };
