@@ -7,12 +7,15 @@ interface IParams {
   productId: string;
 }
 
-export const findProduct = (productId: string) => {
+const findProduct = (productId: string) => {
   return productData.find((product) => product.id === productId);
 };
 
 export async function generateMetadata({ params }: { params: IParams }) {
   const product = findProduct(params.productId);
+  if (!product) {
+    return { title: "Product not found" };
+  }
   return {
     title: product?.name,
   };
