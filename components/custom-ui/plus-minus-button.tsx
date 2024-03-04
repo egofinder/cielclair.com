@@ -1,19 +1,23 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { PiPlusThin, PiMinusThin } from "react-icons/pi";
 import { Button } from "../ui/button";
 
-export default function PlusMinusButton() {
-  const [count, setCount] = useState(0);
+interface PlusMinusButtonProps {
+  quantity: number;
+  setQuantity: (quantity: number) => void;
+}
 
-  function incrementCount() {
-    setCount(count + 1);
+export default function PlusMinusButton({
+  quantity,
+  setQuantity,
+}: PlusMinusButtonProps) {
+  function incrementQuantity() {
+    setQuantity(quantity + 1);
   }
-  function decrementCount() {
-    if (count === 0) return;
-    setCount(count - 1);
+  function decrementQuantity() {
+    if (quantity === 0) return;
+    setQuantity(quantity - 1);
   }
   return (
     <div className={"flex-cols flex h-10 w-fit border border-black font-light"}>
@@ -21,21 +25,19 @@ export default function PlusMinusButton() {
         <Button
           className="h-full rounded-none border-none"
           variant="outline"
-          // size="icon"
-          onClick={decrementCount}
+          onClick={decrementQuantity}
         >
           <PiMinusThin />
         </Button>
       </div>
       <div className="flex h-full w-[50px] items-center justify-center">
-        {count}
+        {quantity}
       </div>
       <div className="flex h-full w-full items-center justify-end">
         <Button
           className="h-full rounded-none border-none"
           variant="outline"
-          // size="icon"
-          onClick={incrementCount}
+          onClick={incrementQuantity}
         >
           <PiPlusThin />
         </Button>

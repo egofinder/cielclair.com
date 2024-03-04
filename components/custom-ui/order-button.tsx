@@ -1,6 +1,6 @@
 "use client";
 
-import useCart from "@/hooks/useCart";
+import useCart from "@/hooks/useBasket";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 // import { SafeUser } from "@/types";

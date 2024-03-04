@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { formatPrice } from "@/lib/utils";
 import { Product } from "@/type/product";
 import CollapseBox from "@/components/product/collapse-box";
 import { Button } from "@/components/ui/button";
 import PlusMinusButton from "@/components/custom-ui/plus-minus-button";
 import SizeSelect from "@/components/custom-ui/size-select";
-import CartButton from "@/components/custom-ui/basket-button";
+import BasketButton from "@/components/custom-ui/basket-button";
 import {
   Carousel,
   CarouselContent,
@@ -29,6 +29,8 @@ const ProductIdClient = ({
   shippingInfo,
   returnPolicy,
 }: ProductClientProps) => {
+  const [quantity, setQuantity] = useState(0);
+
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
   const { id, name, sizes, price, description, status, images } = product;
@@ -83,7 +85,7 @@ const ProductIdClient = ({
             <SizeSelect sizes={sizes} />
           </div>
           <div>
-            <PlusMinusButton />
+            <PlusMinusButton quantity={quantity} setQuantity={setQuantity} />
           </div>
           <div className="flex flex-col gap-2">
             <CollapseBox title="상품 설명" data={description} />
@@ -97,7 +99,7 @@ const ProductIdClient = ({
               </Button>
             ) : (
               <>
-                <CartButton productId={id} />
+                <BasketButton productId={id} quantity={quantity} />
                 <OrderButton />
               </>
             )}
