@@ -11,11 +11,12 @@ import { Product } from "@/type/product";
 
 interface SizeSelectProps {
   sizes: Product["sizes"];
+  setSize: (size: string) => void;
 }
 
-const SizeSelect = ({ sizes }: SizeSelectProps) => {
+const SizeSelect = ({ sizes, setSize }: SizeSelectProps) => {
   return (
-    <Select>
+    <Select onValueChange={(size) => setSize(size)}>
       <SelectTrigger className="h-10 w-full rounded-none border-black">
         <SelectValue placeholder="사이즈를 선택해 주세요." />
       </SelectTrigger>

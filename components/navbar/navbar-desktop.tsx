@@ -98,28 +98,27 @@ const NavbarDesktop = ({ isOpen }: NavbarDesktopProps) => {
           "item flex h-[650px] justify-center bg-white px-[10vw] py-[115px] text-sm"
         }
       >
-        <ul className="flex w-[25%] flex-col gap-2">
+        <ul className="flex w-[30%] flex-col gap-2">
           {componentsA.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
         </ul>
-        <ul className="flex w-[25%] flex-col gap-2">
+        <ul className="flex w-[30%] flex-col gap-2">
           {componentsB.map((component) => (
             <li key={component.title}>{component.title}</li>
           ))}
         </ul>
-        <div className="relative flex h-full w-[50%] flex-col gap-2">
-          <div className="bg-sky-40 h-[90%]">
+        <div className="flex w-[40%] flex-col gap-2">
+          <div className="relative aspect-[3/4]">
             <Image
               src="/product/model-1.png"
               alt="Image"
-              className="h-full object-cover"
-              width={500}
-              height={500}
+              className="object-contain object-left-top"
+              fill
             />
           </div>
-          <div className="h-[5%]">여성</div>
-          <div className="h-[5%]">바로가기</div>
+          <div className="">여성</div>
+          <div className="">바로가기</div>
         </div>
       </div>
 

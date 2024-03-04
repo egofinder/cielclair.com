@@ -10,9 +10,9 @@ const useBasket = () => {
   const { toast } = useToast();
 
   const saveToBasket = useCallback(
-    async (productId: string, quantity: number) => {
+    async (productId: string, size: string, quantity: number) => {
       try {
-        await saveToBasketCookie(productId, quantity);
+        await saveToBasketCookie(productId, size, quantity);
         toast({
           title: "Added to Basket",
           description: "Check your Basket",
@@ -52,9 +52,9 @@ const useBasket = () => {
   );
 
   const updateBasket = useCallback(
-    async (productId: string, quantity: number) => {
+    async (productId: string, size: string, quantity: number) => {
       try {
-        await updateBasketCookie(productId, quantity);
+        await updateBasketCookie(productId, size, quantity);
       } catch (error) {
         throw new Error("Failed to update Basket");
       }

@@ -1,22 +1,14 @@
 "use client";
 
-import useBasket from "@/hooks/useBasket";
 import { Button } from "../ui/button";
 
 interface CartButtonProps {
-  productId: string;
-  quantity: number;
+  onClick: () => void;
 }
 
-const CartButton = ({ productId, quantity }: CartButtonProps) => {
-  const { saveToBasket } = useBasket();
-
+const CartButton = ({ onClick }: CartButtonProps) => {
   return (
-    <Button
-      className="h-10 rounded-none"
-      variant="secondary"
-      onClick={() => saveToBasket(productId, quantity)}
-    >
+    <Button className="h-10 rounded-none" variant="secondary" onClick={onClick}>
       장바구니
     </Button>
   );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { Product } from "@/type/product";
 import CollapseBox from "@/components/product/collapse-box";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import OrderButton from "@/components/custom-ui/order-button";
 import { ProductStatus } from "@/type/enums";
+import useBasket from "@/hooks/useBasket";
 
 interface ProductClientProps {
   product: Product;
@@ -30,10 +31,23 @@ const ProductIdClient = ({
   returnPolicy,
 }: ProductClientProps) => {
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  const [highlightBox, setHighlightBox] = useState(false);
+  const { saveToBasket } = useBasket();
+
+  const { id, name, sizes, price, description, status, images } = product;
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
-  const { id, name, sizes, price, description, status, images } = product;
+  const handleBasketButtonClick = () => {
+    if (size === "" || quantity === 0) {
+      setHighlightBox(true);
+    } else {
+      setHighlightBox(false);
+      saveToBasket(id, size, quantity);
+    }
+  };
+
   return (
     <div>
       {/* Desktop View */}
@@ -45,7 +59,7 @@ const ProductIdClient = ({
           {images.map((image, index) => (
             <Image
               key={index}
-              className="object-cover object-center"
+              className="object-contain object-center"
               src={image}
               alt={name}
               width={1000}
@@ -81,8 +95,13 @@ const ProductIdClient = ({
         <div className="flex flex-col gap-4 text-sm">
           <div>{name}</div>
           <div>USD {formatPrice(price)}</div>
-          <div>
-            <SizeSelect sizes={sizes} />
+          <div
+            className={cn({
+              "animate-pulse ring-2 ring-inset ring-red-700 ring-offset-4":
+                highlightBox,
+            })}
+          >
+            <SizeSelect sizes={sizes} setSize={setSize} />
           </div>
           <div>
             <PlusMinusButton quantity={quantity} setQuantity={setQuantity} />
@@ -99,7 +118,7 @@ const ProductIdClient = ({
               </Button>
             ) : (
               <>
-                <BasketButton productId={id} quantity={quantity} />
+                <BasketButton onClick={handleBasketButtonClick} />
                 <OrderButton />
               </>
             )}

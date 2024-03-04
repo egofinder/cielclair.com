@@ -3,6 +3,7 @@ import { ProductStatus } from "@/type/enums";
 export const products = [
   {
     id: "1232-2223-1111",
+    category: "1",
     name: "실크 플로럴 프린트 블랙 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
     description: [
@@ -35,6 +36,7 @@ export const products = [
   },
   {
     id: "22222-23223-2232",
+    category: "2",
     name: "실크 심플 데님 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
     description: [
@@ -66,6 +68,7 @@ export const products = [
   },
   {
     id: "398-290222-231",
+    category: "2",
     name: "실크 플로럴 프린트 블루 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
     description: [
@@ -97,6 +100,7 @@ export const products = [
   },
   {
     id: "392-290222-231",
+    category: "3",
     name: "실크 심플 그레이 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
     description: [

@@ -6,7 +6,7 @@ import { products } from "@/data/products";
 import EmptyBasket from "@/components/order/basket/empty-basket";
 
 interface BasketClientProps {
-  basketProducts: { id: Product["id"]; quantity: number }[];
+  basketProducts: { id: Product["id"]; size: string; quantity: number }[];
 }
 
 const BasketClient = ({ basketProducts }: BasketClientProps) => {
@@ -19,6 +19,7 @@ const BasketClient = ({ basketProducts }: BasketClientProps) => {
         price: product.price,
         etc: product.etc,
         thumbnail: product.thumbnail,
+        size: basketProduct.size,
         quantity: basketProduct.quantity,
       };
     }

@@ -16,13 +16,14 @@ interface ItemCardProps {
     price: Product["price"];
     etc: Product["etc"];
     thumbnail: Product["thumbnail"];
+    size: string;
     quantity: number;
   };
 }
 
 const ItemCard = ({ product }: ItemCardProps) => {
   const router = useRouter();
-  const { id, thumbnail, name, etc, price, quantity } = product;
+  const { id, thumbnail, name, etc, price, quantity, size } = product;
   const itemTotalPrice = price * quantity;
   const { removeFromBasket } = useBasket();
 
@@ -41,11 +42,17 @@ const ItemCard = ({ product }: ItemCardProps) => {
           />
         </div>
         <div className="flex w-full flex-col items-start gap-1 pl-4">
-          <div className="font-semibold">{name}</div>
+          <div
+            className="cursor-pointer font-semibold"
+            onClick={() => router.push(`/product/${id}`)}
+          >
+            {name}
+          </div>
+          <div>옵션: {size}</div>
           <div className="">{etc}</div>
           <div className="font-bold">{formatPrice(price)}</div>
           <div>
-            <PlusMinusButton productId={id} quantity={quantity} />
+            <PlusMinusButton productId={id} size={size} quantity={quantity} />
           </div>
         </div>
         <div className="flex w-fit flex-col items-end">
