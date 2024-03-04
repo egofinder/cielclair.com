@@ -29,7 +29,7 @@ const ProductIdClient = ({
   shippingInfo,
   returnPolicy,
 }: ProductClientProps) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 

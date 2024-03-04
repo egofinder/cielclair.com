@@ -7,10 +7,19 @@ interface IParams {
   productId: string;
 }
 
+export const findProduct = (productId: string) => {
+  return productData.find((product) => product.id === productId);
+};
+
+export async function generateMetadata({ params }: { params: IParams }) {
+  const product = findProduct(params.productId);
+  return {
+    title: product?.name,
+  };
+}
+
 const ProductDetailPage = ({ params }: { params: IParams }) => {
-  const product = productData.find(
-    (product) => product.id === params.productId,
-  );
+  const product = findProduct(params.productId);
 
   const shippingInfo = shippingInfoData;
   const returnPolicy = returnPolicyData;

@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/utils";
 import { RxCross1 } from "react-icons/rx";
 import { Separator } from "@/components/ui/separator";
 import { Product } from "@/type/product";
+import { useRouter } from "next/navigation";
 
 interface ItemCardProps {
   product: {
@@ -20,6 +21,7 @@ interface ItemCardProps {
 }
 
 const ItemCard = ({ product }: ItemCardProps) => {
+  const router = useRouter();
   const { id, thumbnail, name, etc, price, quantity } = product;
   const itemTotalPrice = price * quantity;
   const { removeFromBasket } = useBasket();
@@ -27,7 +29,10 @@ const ItemCard = ({ product }: ItemCardProps) => {
   return (
     <>
       <div className="flex h-fit w-full flex-row justify-between text-sm">
-        <div className="relative aspect-[3/4] h-[100px]">
+        <div
+          className="relative aspect-[3/4] h-[100px] cursor-pointer"
+          onClick={() => router.push(`/product/${id}`)}
+        >
           <Image
             className="object-cover object-center"
             fill

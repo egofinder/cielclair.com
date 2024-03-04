@@ -55,21 +55,11 @@ const useBasket = () => {
     async (productId: string, quantity: number) => {
       try {
         await updateBasketCookie(productId, quantity);
-        toast({
-          title: "Update Basket",
-          description: "Basket updated",
-          duration: 500,
-        });
       } catch (error) {
-        toast({
-          variant: "destructive",
-          title: "Failed to update basket",
-          description: "Failed to update Basket",
-          duration: 500,
-        });
+        throw new Error("Failed to update Basket");
       }
     },
-    [toast],
+    [],
   );
 
   return {
