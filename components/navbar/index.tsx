@@ -9,14 +9,22 @@ import { cn } from "@/lib/utils";
 import Logo from "./logo";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Search from "./search";
 
 const Navbar = () => {
   const params = usePathname();
   const isHomePage = params === "/";
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const searchToggle = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+
   const [mobile, setMobile] = useState(false);
   const { width } = useWindowSize();
 
@@ -27,12 +35,10 @@ const Navbar = () => {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
-    document.body.style.overflowX = "hidden"; // Add this line
 
     // cleanup function
     return () => {
       document.body.style.overflow = "auto";
-      document.body.style.overflowX = "auto"; // Add this line
     };
   }, [isOpen]);
 
@@ -62,7 +68,12 @@ const Navbar = () => {
             </li>
             <li className="flex w-[25%] flex-auto flex-row justify-end gap-5">
               <div className="hidden md:block">로그인</div>
-              <div className="hidden md:block">검색</div>
+              <div
+                className="hidden cursor-pointer md:block"
+                onClick={searchToggle}
+              >
+                검색
+              </div>
               <div>
                 <Link href="/order/basket">장바구니</Link>
               </div>
@@ -72,6 +83,7 @@ const Navbar = () => {
       </div>
       <NavbarDesktop isOpen={isOpen && !mobile} />
       <NavbarMobile isOpen={isOpen && mobile} />
+      <Search isOpen={isSearchOpen} closeSearch={searchToggle} />
     </>
   );
 };
