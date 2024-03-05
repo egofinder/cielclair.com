@@ -16,8 +16,8 @@ const Search = ({ isOpen, closeSearch }: SearchProps) => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
 
-  const handleInputChange = (event: any) => {
-    setSearchValue(event.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
   };
 
   const handleSearch = () => {
@@ -45,7 +45,7 @@ const Search = ({ isOpen, closeSearch }: SearchProps) => {
           <IoMdSearch
             className="cursor-pointer text-4xl md:text-[80px]"
             color="rgb(0 0 0 / 0.6)"
-            onClick={() => handleSearch()}
+            onClick={handleSearch}
           />
         </div>
       </div>

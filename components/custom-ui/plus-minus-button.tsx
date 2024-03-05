@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 interface PlusMinusButtonProps {
   quantity: number;
-  setQuantity: (quantity: number) => void;
+  setQuantity: (quantity: number | ((prevQuantity: number) => number)) => void;
 }
 
 export default function PlusMinusButton({
@@ -13,11 +13,10 @@ export default function PlusMinusButton({
   setQuantity,
 }: PlusMinusButtonProps) {
   function incrementQuantity() {
-    setQuantity(quantity + 1);
+    setQuantity((prevQuantity) => prevQuantity + 1);
   }
   function decrementQuantity() {
-    if (quantity === 0) return;
-    setQuantity(quantity - 1);
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   }
   return (
     <div className={"flex-cols flex h-10 w-fit border border-black font-light"}>
