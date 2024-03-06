@@ -45,11 +45,12 @@ async function updateBasketCookie(
   cookies().set("basket", JSON.stringify(basket));
 }
 
-async function removeFromBasketCookie(productId: Product["id"]) {
+async function removeFromBasketCookie(productId: Product["id"], size: string) {
   const prevBasket = cookies().get("basket")?.value;
   const basket = JSON.parse(prevBasket || "[]");
   const updatedBasket = basket.filter(
-    (item: { id: Product["id"]; quantity: number }) => item.id !== productId,
+    (item: { id: Product["id"]; size: string }) =>
+      item.id !== productId || item.size !== size,
   );
   cookies().set("basket", JSON.stringify(updatedBasket));
 }

@@ -31,9 +31,9 @@ const useBasket = () => {
   );
 
   const removeFromBasket = useCallback(
-    async (productId: string) => {
+    async (productId: string, size: string) => {
       try {
-        await removeFromBasketCookie(productId);
+        await removeFromBasketCookie(productId, size);
         toast({
           title: "Remove from Basket",
           description: "Check your Basket",

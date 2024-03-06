@@ -23,7 +23,7 @@ export default function PlusMinusButton({
   }
   function decrementCount() {
     if (quantity - 1 === 0) {
-      removeFromBasket(productId);
+      removeFromBasket(productId, size);
     }
     updateBasket(productId, size, quantity - 1);
   }
