@@ -59,7 +59,7 @@ const ItemCard = ({ product }: ItemCardProps) => {
           <RxCross1
             size={15}
             className="cursor-pointer"
-            onClick={() => removeFromBasket(id)}
+            onClick={() => removeFromBasket(id, size)}
           />
           <div className="mt-auto whitespace-nowrap text-end text-sm font-semibold">
             {formatPrice(itemTotalPrice)}
