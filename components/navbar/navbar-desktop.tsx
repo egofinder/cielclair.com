@@ -88,10 +88,13 @@ interface NavbarDesktopProps {
 const NavbarDesktop = ({ isOpen }: NavbarDesktopProps) => {
   return (
     <div
-      className={cn("container sticky inset-0 z-40 transition duration-500", {
-        "hidden opacity-0": !isOpen,
-        "opacity-100": isOpen,
-      })}
+      className={cn(
+        "container sticky inset-0 z-40 opacity-0 transition duration-500",
+        {
+          hidden: !isOpen,
+          "md:opacity-100": isOpen,
+        },
+      )}
     >
       <div
         className={

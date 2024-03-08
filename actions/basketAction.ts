@@ -3,7 +3,7 @@
 import { Product } from "@/type/product";
 import { cookies } from "next/headers";
 
-async function saveToBasketCookie(
+export async function saveToBasketCookie(
   productId: Product["id"],
   size: string,
   quantity: number,
@@ -25,7 +25,7 @@ async function saveToBasketCookie(
   cookies().set("basket", JSON.stringify(basket));
 }
 
-async function updateBasketCookie(
+export async function updateBasketCookie(
   productId: Product["id"],
   size: string,
   quantity: number,
@@ -45,7 +45,10 @@ async function updateBasketCookie(
   cookies().set("basket", JSON.stringify(basket));
 }
 
-async function removeFromBasketCookie(productId: Product["id"], size: string) {
+export async function removeFromBasketCookie(
+  productId: Product["id"],
+  size: string,
+) {
   const prevBasket = cookies().get("basket")?.value;
   const basket = JSON.parse(prevBasket || "[]");
   const updatedBasket = basket.filter(
@@ -55,13 +58,6 @@ async function removeFromBasketCookie(productId: Product["id"], size: string) {
   cookies().set("basket", JSON.stringify(updatedBasket));
 }
 
-function getBasketCookie() {
+export async function getBasketCookie() {
   return JSON.parse(cookies().get("basket")?.value || "[]");
 }
-
-export {
-  saveToBasketCookie,
-  removeFromBasketCookie,
-  updateBasketCookie,
-  getBasketCookie,
-};

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import type { Session } from "@supabase/supabase-js";
+import Link from "next/link";
 
 const componentsA: { title: string; href: string; description: string }[] = [
   {
@@ -83,13 +84,15 @@ const componentsB: { title: string; href: string; description: string }[] = [
 
 interface NavbarMobileProps {
   isOpen: boolean;
+  session: Session | null;
+  signout: () => Promise<void>;
 }
 
-const NavbarMobile = ({ isOpen }: NavbarMobileProps) => {
+const NavbarMobile = ({ isOpen, session, signout }: NavbarMobileProps) => {
   return (
     <div
       className={cn(
-        "sticky inset-0 z-40 flex h-[100vh] flex-auto transition duration-500",
+        "sticky inset-0 z-40 flex h-[100vh] flex-auto transition duration-500 md:hidden",
         {
           "hidden opacity-0": !isOpen,
           "opacity-100": isOpen,
@@ -109,7 +112,12 @@ const NavbarMobile = ({ isOpen }: NavbarMobileProps) => {
             <li key={component.title}>{component.title}</li>
           ))}
           <div className="m-8 flex justify-end gap-8">
-            <div>로그인</div>
+            <Link className={cn({ hidden: session })} href="/auth/login">
+              로그인
+            </Link>
+            <button className={cn({ hidden: !session })} onClick={signout}>
+              로그아웃
+            </button>
             <div>검색</div>
           </div>
         </ul>
