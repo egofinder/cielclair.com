@@ -89,10 +89,10 @@ const NavbarDesktop = ({ isOpen }: NavbarDesktopProps) => {
   return (
     <div
       className={cn(
-        "container sticky inset-0 z-40 opacity-0 transition duration-500",
+        "container sticky inset-0 z-40  h-0 opacity-0 transition duration-500",
         {
           hidden: !isOpen,
-          "md:opacity-100": isOpen,
+          "md:h-full md:opacity-100": isOpen,
         },
       )}
     >

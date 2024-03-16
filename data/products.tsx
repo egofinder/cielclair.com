@@ -2,9 +2,9 @@ import { ProductStatus } from "@/type/enums";
 
 export const products = [
   {
-    id: "1232-2223-1111",
+    id: "prod_PgvhY8lwwwRQ11",
     category: "1",
-    name: "실크 플로럴 프린트 블랙 블라우스",
+    name: "실크 플로럴 프린트 블랙 팬츠",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
     description: [
       "Outshell: Korean Fabric · Wool 100%",
@@ -23,7 +23,8 @@ export const products = [
       "제조국: South Korea",
     ],
     etc: "HOT ITEM",
-    price: 2890,
+    price: 150,
+    price_id: "price_1Ou0ywGc5qKOfUVIOGl5z8EQ",
     thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
     images: [
       "/product/model-1.png",
@@ -35,7 +36,7 @@ export const products = [
     status: ProductStatus.InStock,
   },
   {
-    id: "22222-23223-2232",
+    id: "prod_PgwBZtu9noHXOv",
     category: "2",
     name: "실크 심플 데님 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
@@ -55,7 +56,8 @@ export const products = [
       "제조자: (주)CielClair",
       "제조국: South Korea",
     ],
-    price: 1680,
+    price: 300,
+    price_id: "price_1Ou0zoGc5qKOfUVIz3Fn9Hs5",
     thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
     images: [
       "/product/model-1.png",
@@ -67,7 +69,7 @@ export const products = [
     status: ProductStatus.InStock,
   },
   {
-    id: "398-290222-231",
+    id: "prod_PjTytnKJI0wIxq",
     category: "2",
     name: "실크 플로럴 프린트 블루 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
@@ -87,7 +89,8 @@ export const products = [
       "제조자: (주)CielClair",
       "제조국: South Korea",
     ],
-    price: 1290,
+    price: 450,
+    price_id: "price_1Ou10pGc5qKOfUVIcgqyZ8lR",
     thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
     images: [
       "/product/model-1.png",
@@ -99,7 +102,7 @@ export const products = [
     status: ProductStatus.LowStock,
   },
   {
-    id: "392-290222-231",
+    id: "prod_PjTz0zqKa85Wno",
     category: "3",
     name: "실크 심플 그레이 블라우스",
     sizes: ["사이즈-1", "사이즈-2", "사이즈-3"],
@@ -119,7 +122,8 @@ export const products = [
       "제조자: (주)CielClair",
       "제조국: South Korea",
     ],
-    price: 1290,
+    price: 725,
+    price_id: "price_1Ou11yGc5qKOfUVIqmGmhOxm",
     thumbnail: ["/product/model-1.png", "/product/sample-2.jpeg"],
     images: [
       "/product/model-1.png",

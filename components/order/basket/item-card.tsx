@@ -6,24 +6,31 @@ import useBasket from "@/hooks/useBasket";
 import { formatPrice } from "@/lib/utils";
 import { RxCross1 } from "react-icons/rx";
 import { Separator } from "@/components/ui/separator";
-import { Product } from "@/type/product";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { BasketItem } from "@/type/basket-item";
 
 interface ItemCardProps {
-  product: {
-    id: Product["id"];
-    name: Product["name"];
-    price: Product["price"];
-    etc: Product["etc"];
-    thumbnail: Product["thumbnail"];
-    size: string;
-    quantity: number;
-  };
+  product: BasketItem;
 }
 
 const ItemCard = ({ product }: ItemCardProps) => {
   const router = useRouter();
-  const { id, thumbnail, name, etc, price, quantity, size } = product;
+  const [isLogin, setIsLogin] = useState(false);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      if (session) {
+        setIsLogin(true);
+      }
+    };
+    fetchSession();
+  }, [supabase]);
+
+  const { id, name, etc, price, thumbnail, quantity, size } = product;
   const itemTotalPrice = price * quantity;
   const { removeFromBasket } = useBasket();
 
@@ -52,14 +59,14 @@ const ItemCard = ({ product }: ItemCardProps) => {
           <div className="">{etc}</div>
           <div className="font-bold">{formatPrice(price)}</div>
           <div>
-            <PlusMinusButton productId={id} size={size} quantity={quantity} />
+            <PlusMinusButton basketItem={product} isLogin={isLogin} />
           </div>
         </div>
         <div className="flex w-fit flex-col items-end">
           <RxCross1
             size={15}
             className="cursor-pointer"
-            onClick={() => removeFromBasket(id, size)}
+            onClick={() => removeFromBasket(product, isLogin)}
           />
           <div className="mt-auto whitespace-nowrap text-end text-sm font-semibold">
             {formatPrice(itemTotalPrice)}

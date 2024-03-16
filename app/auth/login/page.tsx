@@ -54,18 +54,18 @@ export default function LoginPage() {
                     </label>
                   </div>
                 </div> */}
-              <a
+              {/* <a
                 href="#"
                 className="text-sm font-normal text-black hover:text-gray-500"
               >
                 아이디 찾기
-              </a>
-              <a
-                href="#"
+              </a> */}
+              <Link
+                href="/auth/password-reset"
                 className="text-sm font-normal text-black hover:text-gray-500"
               >
                 비밀번호 찾기
-              </a>
+              </Link>
             </div>
             <div className="flex items-center justify-start gap-4">
               <p className="text-sm font-light text-gray-500">

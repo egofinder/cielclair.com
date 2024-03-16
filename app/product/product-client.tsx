@@ -4,7 +4,7 @@ import { formatPrice } from "@/lib/utils";
 import { ProductStatus } from "@/type/enums";
 import { Product } from "@/type/product";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface ProductProps {
   products: Product[];
@@ -15,6 +15,7 @@ const ProductClient = ({ products }: ProductProps) => {
   const handleClick = (index: string) => {
     router.push(`/product/${index}`);
   };
+
   return (
     <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => {

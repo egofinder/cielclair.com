@@ -69,12 +69,12 @@ export async function signout() {
   redirect("/");
 }
 
-export async function getCurrentUser() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+// export async function getCurrentUser() {
+//   const supabase = createClient();
+//   const {
+//     data: { user },
+//   } = await supabase.auth.getUser();
 
-  console.log(user);
-  return user;
-}
+//   console.log(user);
+//   return user;
+// }

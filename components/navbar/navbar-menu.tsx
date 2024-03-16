@@ -4,18 +4,26 @@ import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { signout } from "@/actions/authAction";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Search from "./search";
 import { usePathname, useRouter } from "next/navigation";
 import NavbarDesktop from "./navbar-desktop";
 import NavbarMobile from "./navbar-mobile";
-import type { Session } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
+import { BasketContext } from "@/context/basketContext";
 
 interface NavbarMenuProps {
-  session: Session | null;
+  user: User | null;
 }
 
-export default function NavbarMenu({ session }: NavbarMenuProps) {
+export default function NavbarMenu({ user }: NavbarMenuProps) {
+  const basketContext = useContext(BasketContext);
+  if (!basketContext) {
+    throw new Error("BasketContext not found");
+  }
+
+  const { numberOfItems } = basketContext;
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,11 +66,11 @@ export default function NavbarMenu({ session }: NavbarMenuProps) {
             </li>
             <li className="flex w-[25%] flex-auto flex-row justify-end gap-5">
               <div className="hidden md:block">
-                <Link className={cn({ hidden: session })} href="/auth/login">
+                <Link className={cn({ hidden: user })} href="/auth/login">
                   로그인
                 </Link>
                 <button
-                  className={cn({ hidden: !session })}
+                  className={cn({ hidden: !user })}
                   onClick={handleSignOut}
                 >
                   로그아웃
@@ -75,14 +83,14 @@ export default function NavbarMenu({ session }: NavbarMenuProps) {
                 검색
               </div>
               <div>
-                <Link href="/order/basket">장바구니</Link>
+                <Link href="/order/basket">장바구니 ({numberOfItems})</Link>
               </div>
             </li>
           </ul>
         </nav>
       </div>
       <NavbarDesktop isOpen={isOpen} />
-      <NavbarMobile isOpen={isOpen} session={session} signout={handleSignOut} />
+      <NavbarMobile isOpen={isOpen} user={user} signout={handleSignOut} />
       <Search isOpen={isSearchOpen} closeSearch={searchToggle} />
     </>
   );

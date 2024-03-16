@@ -1,63 +1,76 @@
 "use server";
 
-import { Product } from "@/type/product";
-import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/server";
+import { BasketItem } from "@/type/basket-item";
 
-export async function saveToBasketCookie(
-  productId: Product["id"],
-  size: string,
-  quantity: number,
-) {
-  const prevBasket = cookies().get("basket")?.value;
+// Database related function
+export async function getBasketDB() {
+  const supabase = createClient();
+  const userId = (await supabase.auth.getUser()).data.user?.id;
+  const { data: baskets, error } = await supabase
+    .from("baskets")
+    .select("items")
+    .eq("user_id", userId)
+    .single();
 
-  const basket = JSON.parse(prevBasket || "[]");
+  if (!baskets?.items) {
+    return [];
+  }
+  return baskets.items;
+}
 
-  const existingItem = basket.find(
-    (item: { id: Product["id"]; size: string; quantity: number }) =>
-      item.id === productId && item.size === size,
+export async function saveToBasketDB(basketItem: BasketItem) {
+  const prevBasket = await getBasketDB();
+
+  const supabase = createClient();
+  const userId = (await supabase.auth.getUser()).data.user?.id;
+
+  const existingItem = prevBasket.find(
+    (item: { id: BasketItem["id"]; size: BasketItem["size"] }) =>
+      item.id === basketItem.id && item.size === basketItem.size,
   );
 
   if (existingItem) {
-    existingItem.quantity += quantity;
+    existingItem.quantity += basketItem.quantity;
   } else {
-    basket.push({ id: productId, size: size, quantity: quantity });
+    prevBasket.push(basketItem);
   }
-  cookies().set("basket", JSON.stringify(basket));
+
+  let items = { user_id: userId, items: prevBasket };
+
+  await supabase.from("baskets").upsert(items, { onConflict: "user_id" });
 }
 
-export async function updateBasketCookie(
-  productId: Product["id"],
-  size: string,
-  quantity: number,
-) {
-  const prevBasket = cookies().get("basket")?.value;
+export async function updateBasketDB(basketItem: BasketItem) {
+  const prevBasket = await getBasketDB();
 
-  const basket = JSON.parse(prevBasket || "[]");
+  const supabase = createClient();
+  const userId = (await supabase.auth.getUser()).data.user?.id;
 
-  const existingItem = basket.find(
-    (item: { id: Product["id"]; size: string; quantity: number }) =>
-      item.id === productId && item.size === size,
+  const existingItem = prevBasket.find(
+    (item: { id: BasketItem["id"]; size: BasketItem["size"] }) =>
+      item.id === basketItem.id && item.size === basketItem.size,
   );
 
   if (existingItem) {
-    existingItem.quantity = quantity;
+    existingItem.quantity = basketItem.quantity;
   }
-  cookies().set("basket", JSON.stringify(basket));
+  let items = { user_id: userId, items: prevBasket };
+
+  await supabase.from("baskets").upsert(items, { onConflict: "user_id" });
 }
 
-export async function removeFromBasketCookie(
-  productId: Product["id"],
-  size: string,
-) {
-  const prevBasket = cookies().get("basket")?.value;
-  const basket = JSON.parse(prevBasket || "[]");
-  const updatedBasket = basket.filter(
-    (item: { id: Product["id"]; size: string }) =>
-      item.id !== productId || item.size !== size,
+export async function removeFromBasketDB(basketItem: BasketItem) {
+  const prevBasket = await getBasketDB();
+
+  const supabase = createClient();
+  const userId = (await supabase.auth.getUser()).data.user?.id;
+
+  const updatedBasket = prevBasket.filter(
+    (item: { id: BasketItem["id"]; size: BasketItem["size"] }) =>
+      item.id !== basketItem.id || item.size !== basketItem.size,
   );
-  cookies().set("basket", JSON.stringify(updatedBasket));
-}
+  let items = { user_id: userId, items: updatedBasket };
 
-export async function getBasketCookie() {
-  return JSON.parse(cookies().get("basket")?.value || "[]");
+  await supabase.from("baskets").upsert(items, { onConflict: "user_id" });
 }

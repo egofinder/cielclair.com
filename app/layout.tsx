@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import Footer from "@/components/footer/footer";
 import Navbar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { BasketProvider } from "@/context/basketContext";
 
 const robotoCondensed = Roboto_Condensed({ subsets: ["latin"] });
 
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={robotoCondensed.className}>
-        <Navbar />
-        {children}
+        <BasketProvider>
+          <Navbar />
+          {children}
+        </BasketProvider>
         <Footer />
         <Toaster />
       </body>

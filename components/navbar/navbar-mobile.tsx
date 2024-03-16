@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { Session } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 import Link from "next/link";
 
 const componentsA: { title: string; href: string; description: string }[] = [
@@ -84,11 +84,11 @@ const componentsB: { title: string; href: string; description: string }[] = [
 
 interface NavbarMobileProps {
   isOpen: boolean;
-  session: Session | null;
+  user: User | null;
   signout: () => Promise<void>;
 }
 
-const NavbarMobile = ({ isOpen, session, signout }: NavbarMobileProps) => {
+const NavbarMobile = ({ isOpen, user, signout }: NavbarMobileProps) => {
   return (
     <div
       className={cn(
@@ -112,10 +112,10 @@ const NavbarMobile = ({ isOpen, session, signout }: NavbarMobileProps) => {
             <li key={component.title}>{component.title}</li>
           ))}
           <div className="m-8 flex justify-end gap-8">
-            <Link className={cn({ hidden: session })} href="/auth/login">
+            <Link className={cn({ hidden: user })} href="/auth/login">
               로그인
             </Link>
-            <button className={cn({ hidden: !session })} onClick={signout}>
+            <button className={cn({ hidden: !user })} onClick={signout}>
               로그아웃
             </button>
             <div>검색</div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn, formatPrice } from "@/lib/utils";
 import { Product } from "@/type/product";
 import CollapseBox from "@/components/product/collapse-box";
@@ -18,11 +18,14 @@ import Autoplay from "embla-carousel-autoplay";
 import OrderButton from "@/components/custom-ui/order-button";
 import { ProductStatus } from "@/type/enums";
 import useBasket from "@/hooks/useBasket";
+import { BasketItem } from "@/type/basket-item";
+import { createClient } from "@/lib/supabase/client";
 
 interface ProductClientProps {
   product: Product;
   shippingInfo: string[];
   returnPolicy: string[];
+  accessToken?: string;
 }
 
 const ProductIdClient = ({
@@ -30,12 +33,35 @@ const ProductIdClient = ({
   shippingInfo,
   returnPolicy,
 }: ProductClientProps) => {
+  const supabase = createClient();
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      if (session) {
+        setIsLogin(true);
+      }
+    };
+    fetchSession();
+  }, [supabase]);
+
+  const [isLogin, setIsLogin] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
   const [highlightBox, setHighlightBox] = useState(false);
   const { saveToBasket } = useBasket();
 
-  const { id, name, sizes, price, description, status, images } = product;
+  const {
+    id,
+    name,
+    sizes,
+    price,
+    price_id,
+    thumbnail,
+    etc,
+    description,
+    status,
+    images,
+  } = product;
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
@@ -44,7 +70,17 @@ const ProductIdClient = ({
       setHighlightBox(true);
     } else {
       setHighlightBox(false);
-      saveToBasket(id, size, quantity);
+      const basketItem: BasketItem = {
+        id,
+        name,
+        size,
+        price,
+        price_id,
+        thumbnail,
+        etc,
+        quantity,
+      };
+      saveToBasket(basketItem, isLogin);
     }
   };
 

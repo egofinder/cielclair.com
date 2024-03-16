@@ -3,11 +3,9 @@ import NavbarMenu from "./navbar-menu";
 
 const Navbar = async () => {
   const supabase = createClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getUser();
 
-  return <NavbarMenu session={session} />;
+  return <NavbarMenu user={data.user} />;
 };
 
 export default Navbar;

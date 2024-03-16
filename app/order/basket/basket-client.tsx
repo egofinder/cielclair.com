@@ -1,44 +1,36 @@
-import { Product } from "@/type/product";
+"use client";
+
 import ItemCard from "@/components/order/basket/item-card";
 import { formatPrice } from "@/lib/utils";
 import OrderButton from "@/components/custom-ui/order-button";
-import { products } from "@/data/products";
 import EmptyBasket from "@/components/order/basket/empty-basket";
+import { useContext } from "react";
+import { BasketContext } from "@/context/basketContext";
+import { BasketItem } from "@/type/basket-item";
 
-interface BasketClientProps {
-  basketProducts: { id: Product["id"]; size: string; quantity: number }[];
-}
+// interface BasketClientProps {
+//   basketProducts?: BasketItem[];
+// }
 
-const BasketClient = ({ basketProducts }: BasketClientProps) => {
-  const wholeProducts = basketProducts.map((basketProduct) => {
-    const product = products.find((product) => product.id === basketProduct.id);
-    if (product) {
-      return {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        etc: product.etc,
-        thumbnail: product.thumbnail,
-        size: basketProduct.size,
-        quantity: basketProduct.quantity,
-      };
-    }
-  });
+const BasketClient = () => {
+  const basketContext = useContext(BasketContext);
+  if (!basketContext) {
+    throw new Error("BasketContext not found");
+  }
+  const { basketItems, totalPriceOfItems } = basketContext;
 
-  const totalAmount = wholeProducts.reduce(
-    (total, product) =>
-      product ? total + product.price * product.quantity : total,
-    0,
-  );
+  if (basketItems.length <= 0) {
+    return <EmptyBasket />;
+  }
+
+  const totalAmount = totalPriceOfItems;
   const shippingFee = 0;
   const totalPayment = totalAmount + shippingFee;
-
-  if (wholeProducts.length === 0) return <EmptyBasket />;
 
   return (
     <div className="container my-20 flex w-full max-w-[980px] flex-col gap-4">
       <div className="flex flex-col items-center gap-4 px-4">
-        {wholeProducts.map((product, index) =>
+        {basketItems.map((product, index) =>
           product ? <ItemCard key={index} product={product} /> : null,
         )}
       </div>

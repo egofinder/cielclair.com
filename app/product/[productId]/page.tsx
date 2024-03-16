@@ -2,6 +2,7 @@ import { shippingInfo as shippingInfoData } from "@/data/shipping-info";
 import ProductIdClient from "./product-id-client";
 import { products as productData } from "@/data/products";
 import { returnPolicy as returnPolicyData } from "@/data/return-policy";
+import { createClient } from "@/lib/supabase/server";
 
 interface IParams {
   productId: string;
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: { params: IParams }) {
   };
 }
 
-const ProductDetailPage = ({ params }: { params: IParams }) => {
+const ProductDetailPage = async ({ params }: { params: IParams }) => {
   const product = findProduct(params.productId);
 
   const shippingInfo = shippingInfoData;

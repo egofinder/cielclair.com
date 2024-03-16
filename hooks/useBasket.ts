@@ -1,18 +1,33 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import {
-  removeFromBasketCookie,
-  saveToBasketCookie,
-  updateBasketCookie,
+  removeFromBasketDB,
+  saveToBasketDB,
+  updateBasketDB,
 } from "@/actions/basketAction";
+import { BasketContext } from "@/context/basketContext";
+import { BasketItem } from "@/type/basket-item";
 
 const useBasket = () => {
+  const basketContext = useContext(BasketContext);
+
+  if (!basketContext) {
+    throw new Error(
+      "BasketContext is null. Make sure you're inside a BasketProvider.",
+    );
+  }
+
+  const { addToCart, removeFromCart, updateFromCart } = basketContext;
+
   const { toast } = useToast();
 
   const saveToBasket = useCallback(
-    async (productId: string, size: string, quantity: number) => {
+    async (basketItem: BasketItem, isLogin: boolean) => {
       try {
-        await saveToBasketCookie(productId, size, quantity);
+        if (isLogin) {
+          await saveToBasketDB(basketItem);
+        }
+        addToCart(basketItem);
         toast({
           title: "Added to Basket",
           description: "Check your Basket",
@@ -27,13 +42,16 @@ const useBasket = () => {
         });
       }
     },
-    [toast],
+    [toast, addToCart],
   );
 
   const removeFromBasket = useCallback(
-    async (productId: string, size: string) => {
+    async (basketItem: BasketItem, isLogin: boolean) => {
       try {
-        await removeFromBasketCookie(productId, size);
+        if (isLogin) {
+          await removeFromBasketDB(basketItem);
+        }
+        removeFromCart(basketItem);
         toast({
           title: "Remove from Basket",
           description: "Check your Basket",
@@ -48,18 +66,21 @@ const useBasket = () => {
         });
       }
     },
-    [toast],
+    [toast, removeFromCart],
   );
 
   const updateBasket = useCallback(
-    async (productId: string, size: string, quantity: number) => {
+    async (basketItem: BasketItem, isLogin: boolean) => {
       try {
-        await updateBasketCookie(productId, size, quantity);
+        if (isLogin) {
+          await updateBasketDB(basketItem);
+        }
+        updateFromCart(basketItem);
       } catch (error) {
         throw new Error("Failed to update Basket");
       }
     },
-    [],
+    [updateFromCart],
   );
 
   return {
