@@ -3,9 +3,12 @@ import NavbarMenu from "./navbar-menu";
 
 const Navbar = async () => {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const isLogin = user ? true : false;
 
-  return <NavbarMenu user={data.user} />;
+  return <NavbarMenu isLogin={isLogin} />;
 };
 
 export default Navbar;

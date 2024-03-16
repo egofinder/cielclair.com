@@ -1,7 +1,6 @@
 "use client";
 
 import { getBasketDB } from "@/actions/basketAction";
-import { createClient } from "@/lib/supabase/client";
 import { BasketItem } from "@/type/basket-item";
 import { createContext, useEffect, useState } from "react";
 
@@ -9,6 +8,7 @@ type BasketState = BasketItem[];
 
 type BasketContextType = {
   basketItems: BasketState;
+  updateLoginStatus: (isLogin: boolean) => void;
   addToCart: (item: BasketItem) => void;
   removeFromCart: (product: BasketItem) => void;
   updateFromCart: (product: BasketItem) => void;
@@ -23,20 +23,24 @@ export const BasketProvider = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const supabase = createClient();
+  const [isLogin, setIsLogin] = useState(false);
   const [basketItems, setBasketItems] = useState<BasketState>([]);
 
   useEffect(() => {
     const fetchSession = async () => {
-      const { data: session } = await supabase.auth.getSession();
-      if (session) {
+      if (isLogin) {
         const basketState = await getBasketDB();
         setBasketItems(basketState);
-        localStorage.setItem("basket", JSON.stringify(basketItems));
+      } else {
+        setBasketItems([]);
       }
     };
     fetchSession();
-  }, [supabase, basketItems]);
+  }, [isLogin]);
+
+  useEffect(() => {
+    localStorage.setItem("basket", JSON.stringify(basketItems));
+  }, [basketItems]);
 
   const numberOfItems = basketItems.reduce(
     (total, item) => total + item.quantity,
@@ -53,7 +57,11 @@ export const BasketProvider = ({
   };
 
   const removeFromCart = (product: BasketItem) => {
-    setBasketItems(basketItems.filter((item) => item.id !== product.id));
+    setBasketItems(
+      basketItems.filter(
+        (item) => item.id !== product.id || item.size !== product.size,
+      ),
+    );
   };
 
   const updateFromCart = (product: BasketItem) => {
@@ -67,10 +75,15 @@ export const BasketProvider = ({
     setBasketItems([...basketItems]);
   };
 
+  const updateLoginStatus = (isLogin: boolean) => {
+    setIsLogin(isLogin);
+  };
+
   const contextValue = {
     basketItems,
     numberOfItems,
     totalPriceOfItems,
+    updateLoginStatus,
     addToCart,
     removeFromCart,
     updateFromCart,

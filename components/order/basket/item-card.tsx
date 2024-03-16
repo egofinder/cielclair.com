@@ -22,7 +22,9 @@ const ItemCard = ({ product }: ItemCardProps) => {
 
   useEffect(() => {
     const fetchSession = async () => {
-      const { data: session } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
         setIsLogin(true);
       }

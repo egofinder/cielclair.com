@@ -84,11 +84,11 @@ const componentsB: { title: string; href: string; description: string }[] = [
 
 interface NavbarMobileProps {
   isOpen: boolean;
-  user: User | null;
+  isLogin: boolean;
   signout: () => Promise<void>;
 }
 
-const NavbarMobile = ({ isOpen, user, signout }: NavbarMobileProps) => {
+const NavbarMobile = ({ isOpen, isLogin, signout }: NavbarMobileProps) => {
   return (
     <div
       className={cn(
@@ -112,10 +112,10 @@ const NavbarMobile = ({ isOpen, user, signout }: NavbarMobileProps) => {
             <li key={component.title}>{component.title}</li>
           ))}
           <div className="m-8 flex justify-end gap-8">
-            <Link className={cn({ hidden: user })} href="/auth/login">
+            <Link className={cn({ hidden: isLogin })} href="/auth/login">
               로그인
             </Link>
-            <button className={cn({ hidden: !user })} onClick={signout}>
+            <button className={cn({ hidden: !isLogin })} onClick={signout}>
               로그아웃
             </button>
             <div>검색</div>

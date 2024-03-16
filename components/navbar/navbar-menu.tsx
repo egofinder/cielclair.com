@@ -1,45 +1,53 @@
 "use client";
 
-import Logo from "./logo";
-import { cn } from "@/lib/utils";
+import { use, useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import { signout } from "@/actions/authAction";
-import { useContext, useState } from "react";
-import Search from "./search";
 import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { signout } from "@/actions/authAction";
+import { BasketContext } from "@/context/basketContext";
+import Logo from "./logo";
+import Search from "./search";
 import NavbarDesktop from "./navbar-desktop";
 import NavbarMobile from "./navbar-mobile";
-import type { User } from "@supabase/supabase-js";
-import { BasketContext } from "@/context/basketContext";
 
 interface NavbarMenuProps {
-  user: User | null;
+  isLogin: boolean;
 }
 
-export default function NavbarMenu({ user }: NavbarMenuProps) {
-  const basketContext = useContext(BasketContext);
-  if (!basketContext) {
-    throw new Error("BasketContext not found");
-  }
-
-  const { numberOfItems } = basketContext;
-
+export default function NavbarMenu({ isLogin }: NavbarMenuProps) {
   const router = useRouter();
+  const params = usePathname();
+
+  const isHomePage = params === "/";
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  const params = usePathname();
-  const isHomePage = params === "/";
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   const searchToggle = () => {
     setIsSearchOpen(!isSearchOpen);
   };
+
   const handleSignOut = async () => {
     await signout();
     router.refresh();
   };
+
+  const basketContext = useContext(BasketContext);
+
+  if (!basketContext) {
+    throw new Error("BasketContext not found");
+  }
+
+  const { numberOfItems, updateLoginStatus } = basketContext;
+
+  useEffect(() => {
+    updateLoginStatus(isLogin);
+  }, [isLogin, updateLoginStatus]);
 
   return (
     <>
@@ -66,11 +74,11 @@ export default function NavbarMenu({ user }: NavbarMenuProps) {
             </li>
             <li className="flex w-[25%] flex-auto flex-row justify-end gap-5">
               <div className="hidden md:block">
-                <Link className={cn({ hidden: user })} href="/auth/login">
+                <Link className={cn({ hidden: isLogin })} href="/auth/login">
                   로그인
                 </Link>
                 <button
-                  className={cn({ hidden: !user })}
+                  className={cn({ hidden: !isLogin })}
                   onClick={handleSignOut}
                 >
                   로그아웃
@@ -83,14 +91,16 @@ export default function NavbarMenu({ user }: NavbarMenuProps) {
                 검색
               </div>
               <div>
-                <Link href="/order/basket">장바구니 ({numberOfItems})</Link>
+                <Link href="/order/basket">
+                  장바구니 {numberOfItems > 0 ? `(${numberOfItems})` : null}
+                </Link>
               </div>
             </li>
           </ul>
         </nav>
       </div>
       <NavbarDesktop isOpen={isOpen} />
-      <NavbarMobile isOpen={isOpen} user={user} signout={handleSignOut} />
+      <NavbarMobile isOpen={isOpen} isLogin={isLogin} signout={handleSignOut} />
       <Search isOpen={isSearchOpen} closeSearch={searchToggle} />
     </>
   );

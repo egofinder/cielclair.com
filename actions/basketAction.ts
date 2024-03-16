@@ -6,7 +6,8 @@ import { BasketItem } from "@/type/basket-item";
 // Database related function
 export async function getBasketDB() {
   const supabase = createClient();
-  const userId = (await supabase.auth.getUser()).data.user?.id;
+  const user = await supabase.auth.getUser();
+  const userId = user.data.user?.id;
   const { data: baskets, error } = await supabase
     .from("baskets")
     .select("items")
@@ -23,7 +24,8 @@ export async function saveToBasketDB(basketItem: BasketItem) {
   const prevBasket = await getBasketDB();
 
   const supabase = createClient();
-  const userId = (await supabase.auth.getUser()).data.user?.id;
+  const user = await supabase.auth.getUser();
+  const userId = user.data.user?.id;
 
   const existingItem = prevBasket.find(
     (item: { id: BasketItem["id"]; size: BasketItem["size"] }) =>
@@ -45,7 +47,8 @@ export async function updateBasketDB(basketItem: BasketItem) {
   const prevBasket = await getBasketDB();
 
   const supabase = createClient();
-  const userId = (await supabase.auth.getUser()).data.user?.id;
+  const user = await supabase.auth.getUser();
+  const userId = user.data.user?.id;
 
   const existingItem = prevBasket.find(
     (item: { id: BasketItem["id"]; size: BasketItem["size"] }) =>
@@ -64,7 +67,8 @@ export async function removeFromBasketDB(basketItem: BasketItem) {
   const prevBasket = await getBasketDB();
 
   const supabase = createClient();
-  const userId = (await supabase.auth.getUser()).data.user?.id;
+  const user = await supabase.auth.getUser();
+  const userId = user.data.user?.id;
 
   const updatedBasket = prevBasket.filter(
     (item: { id: BasketItem["id"]; size: BasketItem["size"] }) =>
