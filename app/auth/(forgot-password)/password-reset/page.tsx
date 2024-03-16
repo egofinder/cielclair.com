@@ -13,7 +13,7 @@ const PasswordResetPage = () => {
     const supabase = createClient();
     setIsLoading(true);
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "http://localhost:3000/auth/password-update",
+      redirectTo: `${window.location.origin}/auth/password-update`,
     });
     setIsLoading(false);
 
