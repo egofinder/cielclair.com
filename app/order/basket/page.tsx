@@ -1,11 +1,11 @@
-import BasketClient from "./basket-client";
 import { Metadata } from "next";
+import BasketClient from "./basket-client";
 
 export const metadata: Metadata = {
   title: "Basket",
 };
 
-const BasketPage = async () => {
+const BasketPage = () => {
   return <BasketClient />;
 };
 

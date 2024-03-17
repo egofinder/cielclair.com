@@ -1,19 +1,19 @@
-import ProductClient from "./product-client";
+import { Metadata } from "next";
 import { Product } from "@/type/product";
 import { products as data } from "@/data/products";
-import { Metadata } from "next";
 import EmptyProduct from "@/components/product/empty-product";
+import ProductClient from "./product-client";
 
 export const metadata: Metadata = {
   title: "Product",
 };
 
-interface IParams {
+interface ProductProps {
   searchParams: {
     category: string;
   };
 }
-const ProductPage = async ({ searchParams }: IParams) => {
+const ProductPage = async ({ searchParams }: ProductProps) => {
   const category = searchParams.category;
 
   const products: Product[] = await new Promise((resolve) => {
@@ -26,11 +26,13 @@ const ProductPage = async ({ searchParams }: IParams) => {
     }, 200);
   });
 
-  if (products.length === 0) return <EmptyProduct />;
-
   return (
     <div className="container">
-      <ProductClient products={products} />
+      {products.length > 0 ? (
+        <ProductClient products={products} />
+      ) : (
+        <EmptyProduct />
+      )}
     </div>
   );
 };

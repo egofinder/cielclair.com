@@ -6,7 +6,8 @@ const Navbar = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const isLogin = user ? true : false;
+  let isLogin = false;
+  isLogin = user ? true : false;
 
   return <NavbarMenu isLogin={isLogin} />;
 };

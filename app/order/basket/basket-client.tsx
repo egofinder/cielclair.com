@@ -1,23 +1,22 @@
 "use client";
 
-import ItemCard from "@/components/order/basket/item-card";
+import { useContext } from "react";
 import { formatPrice } from "@/lib/utils";
+import { BasketContext } from "@/context/basketContext";
+import ItemCard from "@/components/order/basket/item-card";
 import OrderButton from "@/components/custom-ui/order-button";
 import EmptyBasket from "@/components/order/basket/empty-basket";
-import { useContext } from "react";
-import { BasketContext } from "@/context/basketContext";
-import { BasketItem } from "@/type/basket-item";
-
-// interface BasketClientProps {
-//   basketProducts?: BasketItem[];
-// }
 
 const BasketClient = () => {
   const basketContext = useContext(BasketContext);
+
   if (!basketContext) {
     throw new Error("BasketContext not found");
   }
+
   const { basketItems, totalPriceOfItems } = basketContext;
+
+  console.log(basketItems);
 
   if (basketItems.length <= 0) {
     return <EmptyBasket />;

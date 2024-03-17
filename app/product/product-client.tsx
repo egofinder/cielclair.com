@@ -1,30 +1,26 @@
 "use client";
-import StatusBadge from "@/components/product/status-badge";
-import { formatPrice } from "@/lib/utils";
-import { ProductStatus } from "@/type/enums";
-import { Product } from "@/type/product";
+
+import Link from "next/link";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import { Product } from "@/type/product";
+import { ProductStatus } from "@/type/enums";
+import { formatPrice } from "@/lib/utils";
+import StatusBadge from "@/components/product/status-badge";
 
 interface ProductProps {
   products: Product[];
 }
 
 const ProductClient = ({ products }: ProductProps) => {
-  const router = useRouter();
-  const handleClick = (index: string) => {
-    router.push(`/product/${index}`);
-  };
-
   return (
     <div className="grid grid-cols-1 justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => {
         const { id, thumbnail, name, etc, price, status } = product;
         return (
-          <div
+          <Link
             className="w-full cursor-pointer p-4"
             key={id}
-            onClick={() => handleClick(id)}
+            href={`/product/${id}`}
           >
             <div
               className="relative aspect-[3/4]"
@@ -49,7 +45,7 @@ const ProductClient = ({ products }: ProductProps) => {
               <p className="">USD {formatPrice(price)}</p>
               <p className="font-semibold">{etc}</p>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>
