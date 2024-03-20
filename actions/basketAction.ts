@@ -78,3 +78,11 @@ export async function removeFromBasketDB(basketItem: BasketItem) {
 
   await supabase.from("baskets").upsert(items, { onConflict: "user_id" });
 }
+
+export async function clearBasketDB() {
+  const supabase = createClient();
+  const user = await supabase.auth.getUser();
+  const userId = user.data.user?.id;
+
+  await supabase.from("baskets").delete().match({ user_id: userId });
+}

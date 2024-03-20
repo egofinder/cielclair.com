@@ -13,3 +13,9 @@ export function formatPrice(price: number) {
 
   return formattedPrice.replace(/(\D)(\d)/, "$1 $2");
 }
+
+export function log(...params: any[]) {
+  if (process.env.NODE_ENV === "development") {
+    console.log(__filename, ...params);
+  }
+}

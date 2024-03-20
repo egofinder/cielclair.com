@@ -17,6 +17,7 @@ interface BasketContextType {
   addToCart: (item: BasketItem) => void;
   removeFromCart: (product: BasketItem) => void;
   updateFromCart: (product: BasketItem) => void;
+  clearCart: () => void;
   numberOfItems: number;
   totalPriceOfItems: number;
 }
@@ -120,6 +121,10 @@ export const BasketProvider = ({
     [setBasketItems],
   );
 
+  const clearCart = useCallback(() => {
+    localStorage.clear();
+  }, []);
+
   const updateLoginStatus = (isLogin: boolean) => {
     setIsLogin(isLogin);
   };
@@ -132,6 +137,7 @@ export const BasketProvider = ({
     addToCart,
     removeFromCart,
     updateFromCart,
+    clearCart,
   };
 
   return (

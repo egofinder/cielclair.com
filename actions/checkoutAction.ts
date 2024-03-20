@@ -48,6 +48,6 @@ export async function getCheckoutSession(sessionId: string) {
       status: stripeSession.status,
     };
   } catch (err) {
-    console.log(err);
+    throw new Error("Error fetching session");
   }
 }

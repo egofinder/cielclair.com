@@ -1,6 +1,7 @@
 import { useCallback, useContext } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import {
+  clearBasketDB,
   removeFromBasketDB,
   saveToBasketDB,
   updateBasketDB,
@@ -17,7 +18,8 @@ const useBasket = () => {
     );
   }
 
-  const { addToCart, removeFromCart, updateFromCart } = basketContext;
+  const { addToCart, removeFromCart, updateFromCart, clearCart } =
+    basketContext;
 
   const { toast } = useToast();
 
@@ -83,10 +85,20 @@ const useBasket = () => {
     [updateFromCart],
   );
 
+  const clearBasket = useCallback(async () => {
+    try {
+      await clearBasketDB();
+      clearCart();
+    } catch (error) {
+      throw new Error("Failed to clear Basket");
+    }
+  }, [clearCart]);
+
   return {
     saveToBasket,
     removeFromBasket,
     updateBasket,
+    clearBasket,
   };
 };
 

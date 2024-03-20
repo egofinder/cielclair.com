@@ -1,11 +1,11 @@
+import { createOrderHistory } from "@/actions/orderAction";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 
 const TestPage = async () => {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
-
-  console.log(data);
+  // console.log(data);
   // useEffect(() => {
   //   const fetchSession = async () => {
   //     const { data: session } = await supabase.auth.getSession();
@@ -28,6 +28,9 @@ const TestPage = async () => {
   //   fetchSession();
   // }, [supabase]);
 
+  const email = "test@gmail.com";
+  const paymentIntentId = "pi_1J3xLz2eZvKYlo2C5z3z3z3z";
+  // await createOrderHistory(email, paymentIntentId);
   return (
     <>
       <div>
