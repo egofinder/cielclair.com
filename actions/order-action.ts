@@ -2,26 +2,26 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { log } from "@/lib/utils";
+import { CartItem } from "@/type/CartItem";
 
-export async function createOrderHistory(email: string, paymentIntent: string) {
+export async function createOrderHistory({
+  userId,
+  paymentIntent,
+  items,
+  status,
+}: {
+  userId: string;
+  paymentIntent: string;
+  items: CartItem[];
+  status: string;
+}) {
   const supabase = createClient();
-  const userEmail = email;
-
-  //Get customer id from email
-  const { data: customer, error } = await supabase
-    .from("profiles")
-    .select("user_id, email")
-    .eq("email", userEmail)
-    .single();
-  const userId = customer?.user_id;
-
-  log("Customer: ", customer);
-  log("Error: ", error);
-  log("User ID: ", userId);
 
   const data = {
     user_id: userId,
     payment_intent: paymentIntent,
+    items: items,
+    status: status,
   };
 
   try {

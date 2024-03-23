@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, use, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getCheckoutSession } from "@/actions/checkout-action";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
@@ -11,29 +11,64 @@ import { FaXTwitter } from "react-icons/fa6";
 import { PiTiktokLogo } from "react-icons/pi";
 import { cn } from "@/lib/utils";
 import useCartItems from "@/hooks/useCartItems";
+import useSession from "@/hooks/useSession";
+import { createOrderHistory } from "@/actions/order-action";
 
 type SessionState = "open" | "complete" | "expired";
 
-function SuccessPageWithSession({
-  status,
-  customerEmail,
-}: {
-  status: SessionState;
-  customerEmail: string;
-}) {
+function SuccessPageWithSession() {
   const router = useRouter();
-  const { clearCart } = useCartItems();
+  const searchParams = useSearchParams();
+
+  const sessionId = searchParams.get("session_id");
+
+  const [customerEmail, setCustomerEmail] = useState("customer@example.com");
+  const [status, setStatus] = useState<SessionState | null>();
+
+  const { session } = useSession();
+  const userId = session?.user?.id;
+
+  const { cartItems, clearCart } = useCartItems();
+
+  useEffect(() => {
+    const fetchSession = async (sessionId: string) => {
+      try {
+        const response = await getCheckoutSession(sessionId);
+        setStatus(response?.status as SessionState);
+        setCustomerEmail(response?.customer_email as string);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (sessionId) {
+      fetchSession(sessionId);
+    }
+  }, [sessionId]);
 
   //TODO: 이 부분이 이해가 너무 안됨. 왜 이렇게 하면 되고 다른식이면 안되는지.
   useEffect(() => {
+    const insertOrder = async () => {
+      if (userId && sessionId && status) {
+        const data = {
+          userId: userId,
+          paymentIntent: sessionId,
+          items: cartItems,
+          status: status,
+        };
+        await createOrderHistory(data);
+      }
+    };
+    insertOrder();
+
     if (status === "complete") {
-      clearCart();
+      // clearCart();
+    }
+
+    if (status === "open") {
+      console.log("Open Stripe Session Status: ", status);
     }
   }, [status]);
-
-  if (status === "open") {
-    router.push("order/cart");
-  }
   ////////////////////////////////////////////////
 
   return (
@@ -117,30 +152,9 @@ function SuccessPageWithSession({
 }
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-  const [status, setStatus] = useState<SessionState | null>();
-  const [customerEmail, setCustomerEmail] = useState("customer@example.com");
-
-  useEffect(() => {
-    const fetchSession = async (sessionId: string) => {
-      try {
-        const response = await getCheckoutSession(sessionId);
-        setStatus(response?.status as SessionState);
-        setCustomerEmail(response?.customer_email as string);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (sessionId) {
-      fetchSession(sessionId);
-    }
-  }, [sessionId]);
-
   return (
     <Suspense>
-      <SuccessPageWithSession status={status!} customerEmail={customerEmail} />
+      <SuccessPageWithSession />
     </Suspense>
   );
 }
