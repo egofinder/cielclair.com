@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import type { User } from "@supabase/supabase-js";
 import Link from "next/link";
 
 const componentsA: { title: string; href: string; description: string }[] = [

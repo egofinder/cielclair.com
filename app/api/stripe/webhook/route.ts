@@ -1,4 +1,4 @@
-import { createOrderHistory } from "@/actions/orderAction";
+import { createOrderHistory } from "@/actions/order-action";
 import { log } from "@/lib/utils";
 import Stripe from "stripe";
 

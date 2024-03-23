@@ -1,13 +1,28 @@
-import { login } from "@/actions/authAction";
+"use client";
+import useSession from "@/hooks/useSession";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { login } = useSession();
+
+  const handleLoginButton = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(email, password);
+  };
+
   return (
     <div className="bg-white">
       <div className="mx-auto flex h-[50vh] flex-col items-center justify-center px-6 py-8 md:h-[70vh]">
         <div className="w-full bg-white sm:max-w-md md:mt-0 xl:p-0">
           <div className="space-y-4">
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleLoginButton}>
               <div>
                 <input
                   type="email"
@@ -16,6 +31,8 @@ export default function LoginPage() {
                   className="w-full border-b border-black pb-2 text-sm text-black placeholder-black focus:outline-none"
                   placeholder="아이디"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -26,11 +43,15 @@ export default function LoginPage() {
                   placeholder="비밀번호"
                   className="w-full border-b border-black pb-2 text-sm text-black placeholder-black focus:outline-none"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <button
-                formAction={login}
-                className="w-full border border-black py-4 text-center text-base font-normal text-black"
+                type="submit"
+                className={cn(
+                  "w-full border border-black py-4 text-center text-base font-normal text-black",
+                )}
               >
                 로그인
               </button>

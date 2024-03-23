@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { redirect, useSearchParams } from "next/navigation";
-import { getCheckoutSession } from "@/actions/checkoutAction";
+import { Suspense, use, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getCheckoutSession } from "@/actions/checkout-action";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
 import { FaInstagram } from "react-icons/fa";
@@ -10,42 +10,35 @@ import { RiKakaoTalkLine } from "react-icons/ri";
 import { FaXTwitter } from "react-icons/fa6";
 import { PiTiktokLogo } from "react-icons/pi";
 import { cn } from "@/lib/utils";
-import useBasket from "@/hooks/useBasket";
+import useCartItems from "@/hooks/useCartItems";
 
 type SessionState = "open" | "complete" | "expired";
 
-export default function SuccessPage() {
-  const [status, setStatus] = useState<SessionState>();
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-  const [customerEmail, setCustomerEmail] = useState("customer@example.com");
-  const { clearBasket } = useBasket();
+function SuccessPageWithSession({
+  status,
+  customerEmail,
+}: {
+  status: SessionState;
+  customerEmail: string;
+}) {
+  const router = useRouter();
+  const { clearCart } = useCartItems();
 
+  //TODO: 이 부분이 이해가 너무 안됨. 왜 이렇게 하면 되고 다른식이면 안되는지.
   useEffect(() => {
-    const fetchSession = async () => {
-      if (sessionId) {
-        try {
-          const response = await getCheckoutSession(sessionId);
-          setStatus(response?.status as SessionState);
-          setCustomerEmail(response?.customer_email as string);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-    fetchSession();
-  }, [sessionId]);
+    if (status === "complete") {
+      clearCart();
+    }
+  }, [status]);
 
   if (status === "open") {
-    redirect("/order/basket");
+    router.push("order/cart");
   }
-
-  if (status === "complete") {
-    clearBasket();
-  }
+  ////////////////////////////////////////////////
 
   return (
     <div className="container relative flex h-[89vh] items-center justify-center md:h-[calc(100vh-90px)]">
+      {/* <button onClick={clearCart}>Clear Cart</button> */}
       <div
         className={cn("w-[95%] text-center opacity-20 md:w-[70%]", {
           "opacity-100": status,
@@ -120,5 +113,34 @@ export default function SuccessPage() {
         <span className="sr-only">Loading...</span>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+  const [status, setStatus] = useState<SessionState | null>();
+  const [customerEmail, setCustomerEmail] = useState("customer@example.com");
+
+  useEffect(() => {
+    const fetchSession = async (sessionId: string) => {
+      try {
+        const response = await getCheckoutSession(sessionId);
+        setStatus(response?.status as SessionState);
+        setCustomerEmail(response?.customer_email as string);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (sessionId) {
+      fetchSession(sessionId);
+    }
+  }, [sessionId]);
+
+  return (
+    <Suspense>
+      <SuccessPageWithSession status={status!} customerEmail={customerEmail} />
+    </Suspense>
   );
 }

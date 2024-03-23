@@ -2,22 +2,24 @@
 
 import { Stripe } from "stripe";
 import { createClient } from "@/lib/supabase/server";
-import { BasketItem } from "@/type/basket-item";
+import { CartItem } from "@/type/CartItem";
 
 export async function createEmbededCheckoutSession(
   origin: string,
-  basketItems: BasketItem[],
+  cartItems: CartItem[],
 ) {
   const supabase = createClient();
-  const { data: session } = await supabase.auth.getSession();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-  const userEmail = session.session?.user.email!;
+  const userEmail = user?.email;
   let lineItems: { price: string; quantity: number }[] = [];
 
-  basketItems.map((item: BasketItem) => {
+  cartItems.map((item: CartItem) => {
     lineItems.push({
-      price: item?.price_id!,
+      price: item?.price_id,
       quantity: item.quantity,
     });
   });

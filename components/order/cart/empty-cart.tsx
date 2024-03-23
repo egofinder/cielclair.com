@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 
-const EmptyBasket = () => {
+const EmptyCart = () => {
   return (
     <div className="container my-20 flex w-full max-w-[980px] flex-col items-center justify-center gap-4">
       <Separator />
@@ -11,4 +11,4 @@ const EmptyBasket = () => {
   );
 };
 
-export default EmptyBasket;
+export default EmptyCart;

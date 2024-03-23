@@ -1,23 +1,24 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { signout } from "@/actions/authAction";
-import { BasketContext } from "@/context/basketContext";
 import Logo from "./logo";
 import Search from "./search";
 import NavbarDesktop from "./navbar-desktop";
 import NavbarMobile from "./navbar-mobile";
+import useCart from "@/hooks/useCart";
+import useSession from "@/hooks/useSession";
 
 interface NavbarMenuProps {
   isLogin: boolean;
 }
 
 export default function NavbarMenu({ isLogin }: NavbarMenuProps) {
-  const router = useRouter();
   const params = usePathname();
+  const { total } = useCart();
+  const { logout } = useSession();
 
   const isHomePage = params === "/";
 
@@ -33,21 +34,8 @@ export default function NavbarMenu({ isLogin }: NavbarMenuProps) {
   };
 
   const handleSignOut = async () => {
-    await signout();
-    router.refresh();
+    logout();
   };
-
-  const basketContext = useContext(BasketContext);
-
-  if (!basketContext) {
-    throw new Error("BasketContext not found");
-  }
-
-  const { numberOfItems, updateLoginStatus } = basketContext;
-
-  useEffect(() => {
-    updateLoginStatus(isLogin);
-  }, [isLogin, updateLoginStatus]);
 
   return (
     <>
@@ -91,8 +79,10 @@ export default function NavbarMenu({ isLogin }: NavbarMenuProps) {
                 검색
               </div>
               <div>
-                <Link href="/order/basket">
-                  장바구니 {numberOfItems > 0 ? `(${numberOfItems})` : null}
+                <Link href="/order/cart">
+                  {total.itemQuantity > 0
+                    ? "장바구니" + " (" + total.itemQuantity + ")"
+                    : "장바구니"}
                 </Link>
               </div>
             </li>

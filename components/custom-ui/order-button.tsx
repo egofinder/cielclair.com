@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 interface OrderButtonProps {
-  basketId?: string;
+  cartId?: string;
   className?: string;
 }
 

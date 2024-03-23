@@ -1,4 +1,4 @@
-import { createOrderHistory } from "@/actions/orderAction";
+import { createOrderHistory } from "@/actions/order-action";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 

@@ -1,13 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
+"use client";
+
+import useSession from "@/hooks/useSession";
 import NavbarMenu from "./navbar-menu";
 
-const Navbar = async () => {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+const Navbar = () => {
+  const { session } = useSession();
   let isLogin = false;
-  isLogin = user ? true : false;
+  (session) ? isLogin = true : isLogin = false;
 
   return <NavbarMenu isLogin={isLogin} />;
 };

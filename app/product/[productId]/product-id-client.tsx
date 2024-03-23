@@ -8,7 +8,7 @@ import CollapseBox from "@/components/product/collapse-box";
 import { Button } from "@/components/ui/button";
 import PlusMinusButton from "@/components/custom-ui/plus-minus-button";
 import SizeSelect from "@/components/custom-ui/size-select";
-import BasketButton from "@/components/custom-ui/basket-button";
+import CartButton from "@/components/custom-ui/cart-button";
 import {
   Carousel,
   CarouselContent,
@@ -17,9 +17,9 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import OrderButton from "@/components/custom-ui/order-button";
 import { ProductStatus } from "@/type/enums";
-import useBasket from "@/hooks/useBasket";
-import { BasketItem } from "@/type/basket-item";
 import { createClient } from "@/lib/supabase/client";
+import useCart from "@/hooks/useCart";
+import { CartItem } from "@/type/CartItem";
 
 interface ProductClientProps {
   product: Product;
@@ -50,7 +50,7 @@ const ProductIdClient = ({
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
   const [highlightBox, setHighlightBox] = useState(false);
-  const { saveToBasket } = useBasket();
+  const { addItem } = useCart();
 
   const {
     id,
@@ -67,12 +67,12 @@ const ProductIdClient = ({
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
-  const handleBasketButtonClick = () => {
+  const handleCartButtonClick = () => {
     if (size === "" || quantity === 0) {
       setHighlightBox(true);
     } else {
       setHighlightBox(false);
-      const basketItem: BasketItem = {
+      const cartItem: CartItem = {
         id,
         name,
         size,
@@ -82,7 +82,7 @@ const ProductIdClient = ({
         etc,
         quantity,
       };
-      saveToBasket(basketItem, isLogin);
+      addItem(cartItem);
     }
   };
 
@@ -156,7 +156,7 @@ const ProductIdClient = ({
               </Button>
             ) : (
               <>
-                <BasketButton onClick={handleBasketButtonClick} />
+                <CartButton onClick={handleCartButtonClick} />
                 <OrderButton />
               </>
             )}
