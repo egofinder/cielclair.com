@@ -1,4 +1,3 @@
-import { createOrderHistory } from "@/actions/order-action";
 import { log } from "@/lib/utils";
 import Stripe from "stripe";
 
@@ -28,10 +27,6 @@ export async function POST(req: Request) {
     try {
       switch (event.type) {
         case "checkout.session.completed":
-          const paymentIntentId = event.data.object.payment_intent as string;
-          const userEmail = event.data.object.customer_email as string;
-          await createOrderHistory(userEmail, paymentIntentId);
-          log("Checkout session completed event received: ", paymentIntentId);
           break;
         default:
           throw new Error("Unhandled relevant event!");

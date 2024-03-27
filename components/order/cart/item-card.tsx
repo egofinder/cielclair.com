@@ -10,10 +10,11 @@ import { CartItem } from "@/type/CartItem";
 import useCart from "@/hooks/useCart";
 
 interface ItemCardProps {
-  product: CartItem;
+  product: CartItem | any;
+  editable?: boolean;
 }
 
-const ItemCard = ({ product }: ItemCardProps) => {
+const ItemCard = ({ product, editable = true }: ItemCardProps) => {
   const router = useRouter();
 
   const { id, name, etc, price, thumbnail, quantity, size } = product;
@@ -22,7 +23,7 @@ const ItemCard = ({ product }: ItemCardProps) => {
 
   return (
     <>
-      <div className="flex h-fit w-full flex-row justify-between text-sm">
+      <div className="flex h-fit w-full flex-row justify-between py-4 text-sm">
         <div
           className="relative aspect-[3/4] h-[100px] cursor-pointer"
           onClick={() => router.push(`/product/${id}`)}
@@ -44,16 +45,21 @@ const ItemCard = ({ product }: ItemCardProps) => {
           <div>옵션: {size}</div>
           <div className="">{etc}</div>
           <div className="font-bold">{formatPrice(price)}</div>
-          <div>
-            <PlusMinusButton basketItem={product} />
-          </div>
+
+          {editable ? (
+            <div>
+              <PlusMinusButton basketItem={product} />
+            </div>
+          ) : null}
         </div>
         <div className="flex w-fit flex-col items-end">
-          <RxCross1
-            size={15}
-            className="cursor-pointer"
-            onClick={() => removeItem(product)}
-          />
+          {editable ? (
+            <RxCross1
+              size={15}
+              className="cursor-pointer"
+              onClick={() => removeItem(product)}
+            />
+          ) : null}
           <div className="mt-auto whitespace-nowrap text-end text-sm font-semibold">
             {formatPrice(itemTotalPrice)}
           </div>

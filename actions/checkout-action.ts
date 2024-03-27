@@ -47,7 +47,9 @@ export async function getCheckoutSession(sessionId: string) {
     const stripeSession = await stripe.checkout.sessions.retrieve(sessionId);
     return {
       customer_email: stripeSession.customer_email,
+      payment_intent_id: stripeSession.payment_intent,
       status: stripeSession.status,
+      total_amount: stripeSession.amount_total,
     };
   } catch (err) {
     throw new Error("Error fetching session");

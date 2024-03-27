@@ -2,9 +2,8 @@ import { shippingInfo as shippingInfoData } from "@/data/shipping-info";
 import ProductIdClient from "./product-id-client";
 import { products as productData } from "@/data/products";
 import { returnPolicy as returnPolicyData } from "@/data/return-policy";
-import { createClient } from "@/lib/supabase/server";
 
-interface IParams {
+interface ParamProps {
   productId: string;
 }
 
@@ -12,7 +11,7 @@ const findProduct = (productId: string) => {
   return productData.find((product) => product.id === productId);
 };
 
-export async function generateMetadata({ params }: { params: IParams }) {
+export async function generateMetadata({ params }: { params: ParamProps }) {
   const product = findProduct(params.productId);
   if (!product) {
     return { title: "Product not found" };
@@ -22,7 +21,7 @@ export async function generateMetadata({ params }: { params: IParams }) {
   };
 }
 
-const ProductDetailPage = async ({ params }: { params: IParams }) => {
+const ProductDetailPage = async ({ params }: { params: ParamProps }) => {
   const product = findProduct(params.productId);
 
   const shippingInfo = shippingInfoData;

@@ -22,7 +22,9 @@ function SuccessPageWithSession() {
 
   const sessionId = searchParams.get("session_id");
 
+  const [paymentIntentId, setPaymentIntentId] = useState<string | null>();
   const [customerEmail, setCustomerEmail] = useState("customer@example.com");
+  const [totalAmount, setTotalAmount] = useState(0);
   const [status, setStatus] = useState<SessionState | null>();
 
   const { session } = useSession();
@@ -35,7 +37,9 @@ function SuccessPageWithSession() {
       try {
         const response = await getCheckoutSession(sessionId);
         setStatus(response?.status as SessionState);
+        setPaymentIntentId(response?.payment_intent_id as string);
         setCustomerEmail(response?.customer_email as string);
+        setTotalAmount(response?.total_amount as number);
       } catch (error) {
         console.error(error);
       }
@@ -49,10 +53,11 @@ function SuccessPageWithSession() {
   //TODO: 이 부분이 이해가 너무 안됨. 왜 이렇게 하면 되고 다른식이면 안되는지.
   useEffect(() => {
     const insertOrder = async () => {
-      if (userId && sessionId && status) {
+      if (userId && sessionId && status && paymentIntentId) {
         const data = {
           userId: userId,
-          paymentIntent: sessionId,
+          paymentIntent: paymentIntentId,
+          amount: totalAmount,
           items: cartItems,
           status: status,
         };
@@ -62,7 +67,7 @@ function SuccessPageWithSession() {
     insertOrder();
 
     if (status === "complete") {
-      // clearCart();
+      clearCart();
     }
 
     if (status === "open") {
