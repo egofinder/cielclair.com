@@ -62,15 +62,14 @@ export default function NavbarMenu({ isLogin }: NavbarMenuProps) {
             </li>
             <li className="flex w-[25%] flex-auto flex-row justify-end gap-5">
               <div className="hidden md:block">
-                <Link className={cn({ hidden: isLogin })} href="/auth/login">
-                  로그인
-                </Link>
-                <button
-                  className={cn({ hidden: !isLogin })}
-                  onClick={handleSignOut}
-                >
-                  로그아웃
-                </button>
+                {isLogin ? (
+                  <div className="flex gap-5">
+                    <button onClick={handleSignOut}>로그아웃</button>
+                    <Link href="/order/history">주문기록</Link>
+                  </div>
+                ) : (
+                  <Link href="/auth/login">로그인</Link>
+                )}
               </div>
               <div
                 className="hidden cursor-pointer md:block"
